@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 import StarImg from "../../assets/images/star.png";
 import Img96 from "../../assets/images/image 96.png";
@@ -8,12 +8,34 @@ import Img99 from "../../assets/images/image 99 (1).png";
 import Img100 from "../../assets/images/image 100.png";
 
 import AroImg from "../../assets/images/aro.png";
+import { useBatchListMutation } from "../../service";
+import { useDispatch, useSelector } from "react-redux";
+import { getBatch } from "../../redux/batchSlice";
+import dayjs from "dayjs";
 
 function BatchList() {
+  const dispatch = useDispatch();
+  const batchList = useSelector((state) => state.batchState.batchList);
+  const [reqBatchData, resBathData] = useBatchListMutation();
+  const [isBatchList, setIsBatchList] = useState(false);
+  console.log("batchList", batchList);
+
   useEffect(() => {
-    document.getElementById("course-slider").style.opacity = 1;
-    document.getElementById("course-slider").style.display = "block";
+    reqBatchData({
+      page: 1,
+      limit: 10,
+      search: "",
+      status: "Active",
+    });
   }, []);
+
+  useEffect(() => {
+    if (resBathData?.isSuccess) {
+      dispatch(getBatch(resBathData?.data?.data?.docs));
+      // setPageCount(resBathData?.data?.data?.totalDocs);
+    }
+  }, [resBathData]);
+
   const options = {
     responsiveClass: true,
     nav: false,
@@ -23,7 +45,14 @@ function BatchList() {
     items: 4.5,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
+    // callbacks: true,
   };
+
+  useEffect(() => {
+    if (batchList && Array.isArray(batchList) && batchList?.length > 0) {
+      setIsBatchList(true);
+    }
+  }, [batchList]);
   return (
     <div className="row pb-3 py-5">
       <div className="container">
@@ -41,54 +70,64 @@ function BatchList() {
             </span>
           </div>
           <OwlCarousel id="course-slider" {...options}>
-            {/* <div id="new-slider" className="owl-carousel   slider-first"> */}
-            <div className="post-slide">
-              <div className="post-content">
-                <div className="star_img_outer">
-                  <img src={Img96} alt="" className="hetchs" />
-                </div>
-                <div className="content-in ">
-                  <div className="post-news">
-                    <h3 className="post-title">
-                      <a href="#">PHP</a>
-                    </h3>
-                    <img
-                      src={StarImg}
-                      alt=""
-                      className="image-fliud"
-                      style={{ width: "auto" }}
-                    />
-                  </div>
-                  <p className="post-description">
-                    <span>Branch: Sector 63, Noida</span>
-                  </p>
-                  <p className="post-description">
-                    <span>Starting Date: 2023-04-01</span>
-                  </p>
-                  <p
-                    style={{
-                      color: "#F58733",
-                      fontSize: "11px",
-                      textAlign: "center",
-                      marginTop: "5px",
-                    }}
-                  >
-                    No of students registered: 450
-                  </p>
-                  <a href="#" className="register">
-                    Request a call back
-                    <span>
-                      <img
-                        src={AroImg}
-                        alt=""
-                        className="image-fliud"
-                        style={{ width: "auto" }}
-                      />
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            {batchList && Array.isArray(batchList) && batchList?.length > 0
+              ? batchList?.map((bh, i) => {
+                  return (
+                    <div className="post-slide" key={i}>
+                      <div className="post-content">
+                        <div className="star_img_outer">
+                          <img src={Img96} alt="" className="hetchs" />
+                        </div>
+                        <div className="content-in ">
+                          <div className="post-news">
+                            <h3 className="post-title">
+                              <a href="#">{bh?.course?.title}</a>
+                            </h3>
+                            <img
+                              src={StarImg}
+                              alt=""
+                              className="image-fliud"
+                              style={{ width: "auto" }}
+                            />
+                          </div>
+                          <p className="post-description">
+                            <span>
+                              Branch: {bh?.center?.title}, {bh?.center?.address}
+                            </span>
+                          </p>
+                          <p className="post-description">
+                            <span>
+                              Starting Date:{" "}
+                              {dayjs(bh?.timing).format("YYYY-MM-DD")}
+                            </span>
+                          </p>
+                          <p
+                            style={{
+                              color: "#F58733",
+                              fontSize: "11px",
+                              textAlign: "center",
+                              marginTop: "5px",
+                            }}
+                          >
+                            No of students registered: 450
+                          </p>
+                          <a href="#" className="register">
+                            Request a call back
+                            <span>
+                              <img
+                                src={AroImg}
+                                alt=""
+                                className="image-fliud"
+                                style={{ width: "auto" }}
+                              />
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              : "No Batch Found"}
             <div className="post-slide">
               <div className="post-content">
                 <div className="star_img_outer">
@@ -277,7 +316,6 @@ function BatchList() {
                 </div>
               </div>
             </div>
-            {/* </div> */}
           </OwlCarousel>
           <div class="owl-controls clickable">
             <div className="owl-buttons">

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Img8 from "../../assets/images/Frame (8).png";
 import Img9 from "../../assets/images/Frame (9).png";
 import Img10 from "../../assets/images/Frame (10).png";
@@ -12,8 +12,32 @@ import SlideImg17 from "../../assets/images/image17.png";
 import SlideImg18 from "../../assets/images/image18.png";
 import SlideImg19 from "../../assets/images/image19.png";
 import OwlCarousel from "react-owl-carousel";
+import { useCategoryListMutation } from "../../service";
+import { getCategory } from "../../redux/categorySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function CategoryList() {
+  const dispatch = useDispatch();
+  const categoryList = useSelector((state) => state.categoryState.categoryList);
+  const [reqCategoryList, resCategoryList] = useCategoryListMutation();
+  console.log("categoryList", categoryList);
+
+  useEffect(() => {
+    reqCategoryList({
+      page: 1,
+      limit: 10,
+      search: "",
+      status: "Active",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (resCategoryList?.isSuccess) {
+      dispatch(getCategory(resCategoryList?.data?.data?.docs));
+      // setPageCount(resCategoryData?.data?.data?.totalDocs);
+    }
+  }, [resCategoryList]);
+
   const options = {
     responsiveClass: true,
     nav: true,
@@ -38,6 +62,18 @@ function CategoryList() {
               </span>
             </h2>
             <div className="box-outer pt-5">
+              {categoryList &&
+              Array.isArray(categoryList) &&
+              categoryList?.length > 0
+                ? categoryList?.map((cd, i) => {
+                    return (
+                      <div className="box">
+                        <img src={cd?.logo?.filepath} />
+                        <p>{cd?.name}</p>
+                      </div>
+                    );
+                  })
+                : "No Cetgory Found"}
               <div className="box">
                 <img src={Img8} />
                 <p>java</p>

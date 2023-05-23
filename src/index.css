@@ -388,7 +388,9 @@ nav > div a.nav-item.nav-link {
   width: 40%;
   text-align: right;
   right: 0;
+  z-index: 9999;
 }
+
 .carousel_logo .owl-controls .owl-buttons {
   margin: 0px;
   position: absolute;
@@ -496,6 +498,7 @@ nav > div a.nav-item.nav-link {
   width: 100%;
   text-align: right;
   right: 0;
+  z-index: 9999;
 }
 .footer .nav-link {
   text-align: left;
@@ -695,7 +698,261 @@ a:hover {
   width: 40%;
   text-align: right;
   right: 0;
+  z-index: 9999;
 }
+
+.top-header-singal p {
+  font-weight: 500;
+  font-size: 16px;
+  text-align: left;
+  color: #272c37;
+  margin-bottom: 0rem;
+  line-height: 22px;
+}
+
+.top-im {
+  background: #fff;
+  border-radius: 20px;
+  padding: 0;
+  margin: 20px;
+  margin-bottom: -40px;
+  box-shadow: 3px 3px 7px 3px #c6c6c6;
+}
+
+.top-im p {
+  text-align: center;
+  padding: 10px 0px;
+  background: #23a6f0;
+  color: #fff;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.custom_contact {
+  padding: 20px;
+}
+.custom_contact input,
+select {
+  margin-bottom: 20px;
+}
+
+.home_custom .custom_contact input,
+select {
+  margin-bottom: 0px;
+}
+.home_contact {
+  margin-left: 5%;
+}
+.custom_contact .submit_bt {
+  background: #1b4584;
+  border: 0px solid;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+a.btn-enroll {
+  background-color: #ffcc00;
+  border-radius: 10px;
+  max-width: 150px;
+  min-width: 150px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-enroll p {
+  text-align: center;
+}
+.box-outer-flex {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 50px;
+  row-gap: 50px;
+  align-items: center;
+}
+.flex-box_1 {
+  width: 29.33%;
+  text-align: center;
+  background: #e8f7ff;
+  border-radius: 10px;
+  align-self: center;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  box-shadow: 1px 1px 8px 2px #c6c6c6;
+  border: 1px solid #e8f7ff;
+}
+
+.flex-box_1 p {
+  margin-bottom: 0;
+  line-height: 20px;
+  min-height: 40px;
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.flex-box_1:hover {
+  background-color: #fff;
+  border: 1px solid #000 !important;
+  cursor: pointer;
+}
+
+.tab_ul {
+  column-gap: 110px;
+}
+
+.tab_ul .active a {
+  color: #1b4584;
+}
+.tab_ul li a {
+  color: #5b5b5b;
+}
+
+.basic {
+  position: relative;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.basic li:before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: url(./assets/images/Vector3.png);
+  top: 10px;
+  right: 5px;
+  position: absolute;
+  display: inline-block;
+}
+
+.basic li:before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  background: url(./assets/images/Vector3.png);
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: bottom;
+  margin-top: 2px;
+  position: relative;
+  top: 4px;
+}
+
+.basic li {
+  font-size: 16px;
+  color: #5b5b5b;
+  font-weight: 400;
+  white-space: pre-wrap;
+}
+
+.basic-tab {
+  display: flex;
+  column-gap: 30px;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  justify-content: start;
+}
+
+.basic-tab > div {
+  text-align: center;
+  border: 1px solid;
+  padding: 15px;
+  border-radius: 10px;
+  width: 29.33%;
+}
+
+.post-course i {
+  position: absolute;
+  top: -20px;
+  right: -17px;
+  background: #ffcc00;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50px;
+  color: #14599e;
+  font-size: 22px;
+}
+
+.post-course img {
+  position: absolute;
+  left: -25px;
+  width: 50px !important;
+  height: auto;
+}
+
+.course-slide {
+  background-color: #fff;
+  box-shadow: 3px 0px 8px 3px #dbdbdb;
+  border-radius: 10px;
+  margin: 0 55px 15px 0px;
+  margin-top: 40px;
+  position: relative;
+}
+
+.course-slide .read-more-m {
+  color: #1b4584;
+  border-bottom: 1px solid #1b4584;
+  margin: 10px 0px;
+  display: block;
+  width: 40%;
+}
+
+.Post-outer-course .owl-controls .owl-buttons {
+  margin: 10px;
+  position: absolute;
+  top: -15%;
+  width: 40%;
+  text-align: right;
+  right: 0;
+  z-index: 9999;
+}
+
+.post-course {
+  margin-bottom: 0px !important;
+}
+
+.Post-outer-course .post-description {
+  font-size: 14px;
+  line-height: 24px;
+  color: #000;
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+.post-course p {
+  margin-bottom: 0px !important;
+  width: 100%;
+}
+
+.course-slide {
+  padding: 35px;
+}
+
+.tab-content > .active {
+  display: block !important;
+}
+.fade:not(.show) {
+  opacity: 1;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 780px;
+    margin: 1.75rem auto;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .form .col-md-2 {
     padding: 10px 5px;
@@ -708,6 +965,7 @@ a:hover {
     width: 40% !important;
     text-align: right;
     right: 0;
+    z-index: 9999;
   }
 
   .carousel_logo .owl-controls .owl-buttons {
@@ -888,5 +1146,75 @@ a:hover {
   .footer {
     color: #fff;
     padding: 0px 25px;
+  }
+  .tab_ul {
+    column-gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 20px;
+  }
+  .basic-tab > div {
+    text-align: center;
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+  }
+  .flex-box_1 {
+    width: 100%;
+    text-align: center;
+    background: #e8f7ff;
+    border-radius: 10px;
+    align-self: center;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    box-shadow: 1px 1px 8px 2px #c6c6c6;
+    border: 1px solid #e8f7ff;
+  }
+  .top-im {
+    background: #fff;
+    border-radius: 20px;
+    padding: 0;
+    margin: 20px;
+    margin-bottom: 60px;
+    box-shadow: 3px 3px 7px 3px #c6c6c6;
+    width: 90%;
+  }
+  .top-header-singal p {
+    font-weight: 500;
+    font-size: 17px !important;
+    line-height: 22px !important;
+  }
+  .top-header p {
+    margin-bottom: 0rem;
+  }
+  .now {
+    text-align: center !important;
+    color: #fff !important;
+  }
+  .tab_ul li {
+    text-align: center;
+    border: 1px solid #c6c6c6;
+    padding: 10px;
+  }
+  .tab_ul li.active {
+    background: #2c72d5;
+    color: #fff;
+  }
+  .tab_ul li.active a {
+    color: #fff;
+  }
+  .home_contact {
+    margin-left: 0%;
+  }
+  div#myModal {
+    padding: 0 !important;
+  }
+  .custom-select {
+    font-size: 12px;
+    margin-bottom: 20px;
   }
 }

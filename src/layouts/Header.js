@@ -1,7 +1,9 @@
 import React from "react";
 import Logo from "../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <header>
       <div className="row">
@@ -50,6 +52,7 @@ function Header() {
                       role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
+                      onClick={() => navigate(`/course/1`)}
                     >
                       {" "}
                       Courses
