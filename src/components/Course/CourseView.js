@@ -9,17 +9,20 @@ import OwlCarousel from "react-owl-carousel";
 function CourseView() {
   const options = {
     responsiveClass: true,
-    nav: false,
+    nav: true,
     autoplay: true,
     smartSpeed: 1000,
     dots: false,
     items: 3.5,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
+    navContainerClass:"owl-controls owl-buttons",
+    navClass:['owl-prev','owl-next'],
     // callbacks: true,
   };
   return (
     <>
+      <div class="bg-light-course">
       <div class="row" style={{ backgroundColor: "E8F7FF" }}>
         <div class="container">
           <div class="top-header d-flex top-header-singal">
@@ -127,6 +130,7 @@ function CourseView() {
             </div>
           </div>
         </div>
+      </div>
       </div>
       <div class="row">
         <div class="container py-md-5">
@@ -278,7 +282,7 @@ function CourseView() {
       <div class="row pb-3 py-5" style={{ backgroundColor: "#F6F6F6" }}>
         <div class="container-fluid py-5 Post-outer-course">
           <div class="col-md-12 ">
-            <OwlCarousel id="news-slide" {...options}>
+            <OwlCarousel className="testimonial_slide" id="news-slide" {...options}>
               <div class="post-slide course-slide">
                 <div class="post-content">
                   <div class="content-in">
@@ -432,12 +436,12 @@ function CourseView() {
                 </div>
               </div>
             </OwlCarousel>
-            <div class="owl-controls clickable">
+            {/* <div class="owl-controls clickable">
               <div className="owl-buttons">
                 <div className="owl-prev">prev</div>
                 <div className="owl-next">next</div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

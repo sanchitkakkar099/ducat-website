@@ -45,7 +45,9 @@ function CategoryList() {
     smartSpeed: 1000,
     dots: false,
     items: 6,
-    navContainerClass: "owl-controls clickable ",
+    navContainerClass: "owl-controls clickable",
+    controlsClass: "owl-buttons",
+    // navClass:['owl-prev','owl-next'],
   };
   return (
     <Fragment>
@@ -74,6 +76,8 @@ function CategoryList() {
                     );
                   })
                 : "No Cetgory Found"}
+            </div>
+            <div className="box-outer pt-5">
               <div className="box">
                 <img src={Img8} />
                 <p>java</p>

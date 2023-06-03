@@ -29,7 +29,7 @@ function Banner() {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 top-im">
+            <div className="col-md-6">
               <img src={TophImg} className="img-responsive" />
             </div>
           </div>

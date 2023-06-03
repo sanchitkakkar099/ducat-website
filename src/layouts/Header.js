@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
@@ -35,9 +35,9 @@ function Header() {
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100 ">
                   <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="#">
+                    <Link className="nav-link active" to={"/"}>
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="#">
@@ -45,18 +45,10 @@ function Header() {
                     </a>
                   </li>
                   <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
-                      href="#"
-                      id="navbarScrollingDropdown"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      onClick={() => navigate(`/course/1`)}
-                    >
+                    <Link className="nav-link dropdown-toggle" to="/course/1">
                       {" "}
                       Courses
-                    </a>
+                    </Link>
                     <ul
                       className="dropdown-menu"
                       aria-labelledby="navbarScrollingDropdown"

@@ -38,13 +38,16 @@ function BatchList() {
 
   const options = {
     responsiveClass: true,
-    nav: false,
+    nav: true,
     autoplay: true,
     smartSpeed: 1000,
     dots: false,
     items: 4.5,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
+    navContainerClass: "owl-controls owl-buttons",
+    navClass: ["owl-prev", "owl-next"],
+
     // callbacks: true,
   };
 
@@ -69,7 +72,7 @@ function BatchList() {
               </select>
             </span>
           </div>
-          <OwlCarousel id="course-slider" {...options}>
+          <OwlCarousel id="course-slider" {...options} className="slider-first">
             {batchList && Array.isArray(batchList) && batchList?.length > 0
               ? batchList?.map((bh, i) => {
                   return (
@@ -128,6 +131,53 @@ function BatchList() {
                   );
                 })
               : "No Batch Found"}
+            <div className="post-slide">
+              <div className="post-content">
+                <div className="star_img_outer">
+                  <img src={Img96} alt="" className="hetchs" />
+                </div>
+                <div className="content-in ">
+                  <div className="post-news">
+                    <h3 className="post-title">
+                      <a href="#">PHP</a>
+                    </h3>
+                    <img
+                      src={StarImg}
+                      alt=""
+                      className="image-fliud"
+                      style={{ width: "auto" }}
+                    />
+                  </div>
+                  <p className="post-description">
+                    <span>Branch: Sector 63, Noida</span>
+                  </p>
+                  <p className="post-description">
+                    <span>Starting Date: 2023-04-01</span>
+                  </p>
+                  <p
+                    style={{
+                      color: "#F58733",
+                      fontSize: "11px",
+                      textAlign: "center",
+                      marginTop: "5px",
+                    }}
+                  >
+                    No of students registered: 450
+                  </p>
+                  <a href="#" className="register">
+                    Request a call back
+                    <span>
+                      <img
+                        src={AroImg}
+                        alt=""
+                        className="image-fliud"
+                        style={{ width: "auto" }}
+                      />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
             <div className="post-slide">
               <div className="post-content">
                 <div className="star_img_outer">
@@ -317,12 +367,12 @@ function BatchList() {
               </div>
             </div>
           </OwlCarousel>
-          <div class="owl-controls clickable">
+          {/* <div class="owl-controls clickable">
             <div className="owl-buttons">
-              <div className="owl-prev">prev</div>
-              <div className="owl-next">next</div>
+              <div className="owl-prev"></div>
+              <div className="owl-next"></div>
             </div>
-          </div>
+          </div> */}
           {/* <!-- <div className="btm_btn"><a href="#"> Explore More</a></div> --> */}
         </div>
       </div>

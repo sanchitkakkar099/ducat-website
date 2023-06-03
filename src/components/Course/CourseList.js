@@ -39,13 +39,16 @@ function CourseList() {
 
   const options = {
     responsiveClass: true,
-    nav: false,
+    nav: true,
     autoplay: true,
     smartSpeed: 1000,
     dots: false,
-    items: 3.4,
+    items: 3.3,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
+    navContainerClass: "owl-controls owl-buttons",
+    navClass: ["owl-prev", "owl-next"],
+
     // callbacks: true,
   };
 
@@ -59,7 +62,11 @@ function CourseList() {
       <div className="container">
         <div className="col-md-12">
           <h2 className="text-left pop h23">Find the Right Course for You</h2>
-          <OwlCarousel className="owl-carousel" id="news-slider" {...options}>
+          <OwlCarousel
+            className="owl-theme fiend_right"
+            id="news-slider"
+            {...options}
+          >
             {courseList && Array.isArray(courseList) && courseList?.length > 0
               ? courseList?.map((cs, i) => {
                   return (
@@ -287,6 +294,96 @@ function CourseList() {
                 </a>
               </div>
             </div>
+            <div className="post-slide">
+              <div className="post-content">
+                <div className="img_hetch">
+                  <img src={ImgFrame16} alt="" className="hetch" />
+                </div>
+                <div className="content-in">
+                  <h3 className="post-title">
+                    <a href="#">Graphic Designing</a>
+                  </h3>
+                  <img
+                    src={StarImg}
+                    alt=""
+                    className="image-fliud"
+                    style={{ width: "auto" }}
+                  />
+                  <p className="post-description">
+                    Equip yourself with the skills to build applications
+                    end-to-end. Master the complete technology stack and
+                    techniques of web & mobile development. Become a certified
+                    Jack Full Stack Developer.
+                  </p>
+                  <p className="post-description">
+                    <span>
+                      Duration: <strong>6 Months</strong>
+                    </span>
+                  </p>
+                  <p className="post-description">
+                    <span>
+                      Eligibility: <strong>10+2 (Recognised Board)</strong>
+                    </span>
+                  </p>
+                </div>
+                <a href="#" className="download">
+                  Download Brochure
+                  <span>
+                    <img
+                      src={DownImg}
+                      alt=""
+                      className="image-fliud"
+                      style={{ width: "auto" }}
+                    />
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div className="post-slide">
+              <div className="post-content">
+                <div className="img_hetch">
+                  <img src={ImgFram21} alt="" className="hetch" />
+                </div>
+                <div className="content-in">
+                  <h3 className="post-title">
+                    <a href="#">Java Full Stack Developer</a>
+                  </h3>
+                  <img
+                    src={StarImg}
+                    alt=""
+                    className="image-fliud"
+                    style={{ width: "auto" }}
+                  />
+                  <p className="post-description">
+                    Equip yourself with the skills to build applications
+                    end-to-end. Master the complete technology stack and
+                    techniques of web & mobile development. Become a certified
+                    Jack Full Stack Developer.
+                  </p>
+                  <p className="post-description">
+                    <span>
+                      Duration: <strong>6 Months</strong>
+                    </span>
+                  </p>
+                  <p className="post-description">
+                    <span>
+                      Eligibility: <strong>10+2 (Recognised Board)</strong>
+                    </span>
+                  </p>
+                </div>
+                <a href="#" className="download">
+                  Download Brochure
+                  <span>
+                    <img
+                      src={DownImg}
+                      alt=""
+                      className="image-fliud"
+                      style={{ width: "auto" }}
+                    />
+                  </span>
+                </a>
+              </div>
+            </div>
             {/* <div className="post-slide">
               <div className="post-content">
                 <div className="img_hetch">
@@ -333,12 +430,12 @@ function CourseList() {
               </div>
             </div> */}
           </OwlCarousel>
-          <div class="owl-controls clickable">
+          {/* <div class="owl-controls clickable">
             <div className="owl-buttons">
               <div className="owl-prev">prev</div>
               <div className="owl-next">next</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
