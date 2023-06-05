@@ -26,6 +26,13 @@ export const courseApi = createApi({
       }),
       providesTags: ["course"],
     }),
+    getCategoryCourseDropdown: builder.query({
+      query: () => ({
+        url: "course/category/home/list",
+        method: "GET",
+      }),
+      providesTags: ["course"],
+    }),
     courseById: builder.query({
       query: (id) => ({
         url: `course/byid/${id}`,
@@ -38,6 +45,7 @@ export const courseApi = createApi({
 export const {
   useCourseListMutation,
   useGetAllCourseDropdownQuery,
+  useGetCategoryCourseDropdownQuery,
   useCourseByIdQuery,
 } = courseApi;
 

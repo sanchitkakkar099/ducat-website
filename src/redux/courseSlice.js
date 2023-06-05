@@ -4,6 +4,7 @@ const initState = {
   courselist: [],
   courseView: null,
   courseDropdown: [],
+  categoryCourseDropdown: [],
 };
 
 export const courseSlice = createSlice({
@@ -19,9 +20,16 @@ export const courseSlice = createSlice({
     setCourseDropDown: (state, { payload }) => {
       state.courseDropdown = payload;
     },
+    setCategoryCourseDropDown: (state, { payload }) => {
+      state.categoryCourseDropdown = payload;
+    },
   },
 });
 
-export const { getCourse, setCourseView, setCourseDropDown } =
-  courseSlice.actions;
+export const {
+  getCourse,
+  setCourseView,
+  setCourseDropDown,
+  setCategoryCourseDropDown,
+} = courseSlice.actions;
 export default courseSlice.reducer;

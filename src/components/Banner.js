@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchImg from "../assets/images/search.png";
 import TophImg from "../assets/images/top_h.png";
 import JavawImg from "../assets/images/javaw.png";
 import PythonImg from "../assets/images/Pythonw.png";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { useDispatch, useSelector } from "react-redux";
+import { setCourseDropDown } from "../redux/courseSlice";
+import { useGetAllCourseDropdownQuery } from "../service";
+import { useNavigate } from "react-router-dom";
 
 function Banner() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const courseDropdown = useSelector(
+    (state) => state.courseState.courseDropdown
+  );
+  const resCourseDropdown = useGetAllCourseDropdownQuery();
   const [singleSelections, setSingleSelections] = useState([]);
-  const [first] = singleSelections;
-  console.log("singleSelections", first);
+  const [selectedCourse] = singleSelections;
+  console.log("singleSelections", selectedCourse);
+
+  useEffect(() => {
+    if (resCourseDropdown?.isSuccess && resCourseDropdown?.data?.data) {
+      dispatch(setCourseDropDown(resCourseDropdown?.data?.data));
+    }
+  }, [resCourseDropdown]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (selectedCourse) {
+      navigate(`/course/${selectedCourse?._id}`);
+    }
+  };
+
   return (
     <>
       <div className="row ">
@@ -21,27 +45,21 @@ function Banner() {
               <div className="input-group">
                 <div className="wrap">
                   <div className="search">
-                    {/* <input
-                      type="text"
-                      className="searchTerm"
-                      placeholder="Search your favourite course today"
-                    /> */}
                     <Typeahead
                       id="basic-typeahead-single"
-                      labelKey="name"
+                      labelKey="label"
                       onChange={setSingleSelections}
-                      options={[
-                        { name: "Small" },
-                        { name: "Default" },
-                        { name: "Large" },
-                      ]}
+                      options={courseDropdown || []}
                       placeholder="Search your favourite course today"
                       className="searchTerm"
                       selected={singleSelections}
                       highlightOnlyResult={true}
                     />
-
-                    <button type="submit" className="searchButton">
+                    <button
+                      type="button"
+                      className="searchButton"
+                      onClick={(e) => handleSearch(e)}
+                    >
                       <img src={SearchImg} />
                     </button>
                   </div>

@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  useCourseByIdQuery,
   useGetAllCenterDropdownQuery,
   useGetAllCourseDropdownQuery,
   useSubmitEnquiryMutation,
 } from "../../service";
 import { Controller, useForm } from "react-hook-form";
-import { setCourseDropDown } from "../../redux/courseSlice";
+import { setCourseDropDown, setCourseView } from "../../redux/courseSlice";
 import { setCenterDropDown } from "../../redux/centerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FormFeedback, Input } from "reactstrap";
@@ -17,18 +18,25 @@ import Img8 from "../../assets/images/Frame (8).png";
 import ImgE1 from "../../assets/images/E1.png";
 
 import OwlCarousel from "react-owl-carousel";
+import { Link, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 function CourseView() {
   const dispatch = useDispatch();
+  const params = useParams();
   const courseDropdown = useSelector(
     (state) => state.courseState.courseDropdown
   );
   const centerDropdown = useSelector(
     (state) => state.centerState.centerDropdown
   );
+  const courseViewData = useSelector((state) => state.courseState.courseView);
   const [reqEnquiry, resEnquiry] = useSubmitEnquiryMutation();
   const resCourseDropdown = useGetAllCourseDropdownQuery();
   const resCenterDropdown = useGetAllCenterDropdownQuery();
+  const resCourseById = useCourseByIdQuery(params?.id);
+
+  const [activeTab, setActiveTab] = useState("about");
 
   const {
     control,
@@ -36,6 +44,12 @@ function CourseView() {
     formState: { errors },
     reset,
   } = useForm();
+
+  useEffect(() => {
+    if (resCourseById?.isSuccess) {
+      dispatch(setCourseView(resCourseById?.data?.data));
+    }
+  }, [resCourseById]);
 
   useEffect(() => {
     if (resCourseDropdown?.isSuccess && resCourseDropdown?.data?.data) {
@@ -87,7 +101,7 @@ function CourseView() {
                 <span class="d-flex " style={{ alignItems: "center" }}>
                   <img src={Img8} />
                   <p class="ml-3 mb-0" style={{ fontSize: "32px" }}>
-                    java
+                    {courseViewData?.title}
                   </p>
                 </span>
                 <img
@@ -96,13 +110,8 @@ function CourseView() {
                   class="image-fliud py-3"
                   style={{ width: "auto" }}
                 />
-                <p>
-                  Equip yourself with the skills to build applications
-                  end-to-end. Master the complete technology stack and
-                  techniques of web & mobile development. Become a certified
-                  Jack Full Stack Developer.
-                </p>
-                <a href="#" class="btn-enroll">
+                <p>{courseViewData?.subtitle}</p>
+                {/* <a href="#" class="btn-enroll">
                   <p>
                     <b>Enroll Now</b>
                   </p>
@@ -110,7 +119,7 @@ function CourseView() {
                 </a>
                 <p style={{ fontSize: "#1B4584" }} class="pt-3 pb-3 pb-md-0">
                   50 already enrolled
-                </p>
+                </p> */}
               </div>
               <div class="col-md-4 top-im ml-md-5">
                 <div class="form h-100">
@@ -334,30 +343,40 @@ function CourseView() {
         <div class="container pb-5">
           <div class="col-md-12">
             <ul class="nav nav-tabs tab_ul">
-              <li class="active">
-                <a data-toggle="tab" href="#home">
+              <li className={activeTab === "about" ? "active" : ""}>
+                <Link to="" onClick={() => setActiveTab("about")}>
                   About
-                </a>
+                </Link>
               </li>
-              <li>
-                <a data-toggle="tab" href="#menu1">
+              <li className={activeTab === "eligiblity" ? "active" : ""}>
+                <Link to="" onClick={() => setActiveTab("eligiblity")}>
                   Eligibility
-                </a>
+                </Link>
               </li>
-              <li>
-                <a data-toggle="tab" href="#menu2">
+              <li className={activeTab === "eop" ? "active" : ""}>
+                <Link to="" onClick={() => setActiveTab("eop")}>
                   Enrollment options
-                </a>
+                </Link>
               </li>
-              <li>
-                <a data-toggle="tab" href="#menu3">
+              <li className={activeTab === "faqs" ? "active" : ""}>
+                <Link to="" onClick={() => setActiveTab("faqs")}>
                   FAQS
-                </a>
+                </Link>
               </li>
             </ul>
             <div class="tab-content pt-5">
-              <div id="home" class="tab-pane fade show in active">
-                <h4>What you will learn?</h4>
+              <div
+                id="home"
+                class={`tab-pane fade ${
+                  activeTab === "about" ? "show in active" : ""
+                }`}
+              >
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(courseViewData?.description),
+                  }}
+                />
+                {/* <h4>What you will learn?</h4>
                 <ul class="basic pb-5">
                   <li>
                     Learn the basic syntax and functions of the Java programming
@@ -394,23 +413,38 @@ function CourseView() {
                   dolore eu fugiat nulla pariatur. Excepteur sint occaecat
                   cupidatat non proident, sunt in culpa qui officia deserunt
                   mollit anim id est laborum."
-                </p>
+                </p> */}
               </div>
-              <div id="menu1" class="tab-pane fade">
+              <div
+                id="menu1"
+                class={`tab-pane fade ${
+                  activeTab === "eligiblity" ? "show in active" : ""
+                }`}
+              >
                 <h4>Menu 1</h4>
                 <p>
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
               </div>
-              <div id="menu2" class="tab-pane fade">
+              <div
+                id="menu2"
+                class={`tab-pane fade ${
+                  activeTab === "eop" ? "show in active" : ""
+                }`}
+              >
                 <h3>Menu 2</h3>
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                   accusantium doloremque laudantium, totam rem aperiam.
                 </p>
               </div>
-              <div id="menu3" class="tab-pane fade">
+              <div
+                id="menu3"
+                class={`tab-pane fade ${
+                  activeTab === "faqs" ? "show in active" : ""
+                }`}
+              >
                 <h3>Menu 3</h3>
                 <p>
                   Eaque ipsa quae ab illo inventore veritatis et quasi

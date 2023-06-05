@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Logo from "../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useGetCategoryCourseDropdownQuery } from "../service";
+import { setCategoryCourseDropDown } from "../redux/courseSlice";
+import { useDispatch, useSelector } from "react-redux";
+import useOutsideClick from "../hooks/useOutsideClick ";
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const categoryCourseDropdown = useSelector(
+    (state) => state.courseState.categoryCourseDropdown
+  );
+  console.log("categoryCourseDropdown", categoryCourseDropdown);
+  const resCategoryCourseDropdown = useGetCategoryCourseDropdownQuery();
+
+  const ref = useRef();
   const [showDropdown, setShowDropdown] = useState(false);
+
+  useOutsideClick(ref, () => {
+    setShowDropdown(false);
+  });
+
+  useEffect(() => {
+    if (
+      resCategoryCourseDropdown?.isSuccess &&
+      resCategoryCourseDropdown?.data?.data
+    ) {
+      dispatch(
+        setCategoryCourseDropDown(resCategoryCourseDropdown?.data?.data)
+      );
+    }
+  }, [resCategoryCourseDropdown]);
+
   const courseDropdown = (e) => {
     setShowDropdown(!showDropdown);
   };
@@ -49,7 +77,7 @@ function Header() {
                       About us
                     </a>
                   </li>
-                  <li className="nav-item dropdown">
+                  <li className="nav-item dropdown" ref={ref}>
                     <Link
                       className="nav-link dropdown-toggle"
                       to=""
@@ -62,12 +90,53 @@ function Header() {
                       className={`dropdown-menu ${showDropdown ? "show" : ""}`}
                       aria-labelledby="dropdownMenuButton"
                     >
-                      <li>
+                      {/* <li>
                         <a class="dropdown-item" href="#">
                           Action
                         </a>
-                      </li>
-                      <li>
+                      </li> */}
+                      {categoryCourseDropdown &&
+                        Array.isArray(categoryCourseDropdown) &&
+                        categoryCourseDropdown?.length > 0 &&
+                        categoryCourseDropdown?.map((el, i) => {
+                          return (
+                            <li key={i}>
+                              <Link
+                                to={""}
+                                class="dropdown-item d-flex justify-content-between"
+                              >
+                                {el?.name}
+                                <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
+                              </Link>
+                              {el?.course &&
+                                Array.isArray(el?.course) &&
+                                el?.course?.length > 0 && (
+                                  <ul class="dropdown-menu dropdown-submenu">
+                                    {el?.course &&
+                                    Array.isArray(el?.course) &&
+                                    el?.course?.length > 0
+                                      ? el?.course?.map((cs) => {
+                                          return (
+                                            <li key={cs?._id}>
+                                              <Link
+                                                class="dropdown-item"
+                                                to={`/course/${cs?._id}`}
+                                                onClick={() =>
+                                                  setShowDropdown(false)
+                                                }
+                                              >
+                                                {cs?.title}
+                                              </Link>
+                                            </li>
+                                          );
+                                        })
+                                      : ""}
+                                  </ul>
+                                )}
+                            </li>
+                          );
+                        })}
+                      {/* <li>
                         <a
                           class="dropdown-item d-flex justify-content-between"
                           href="#"
@@ -114,55 +183,7 @@ function Header() {
                             </a>
                           </li>
                         </ul>
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item d-flex justify-content-between"
-                          href="#"
-                        >
-                          Submenu
-                          <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-submenu">
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              Submenu item 1
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              Submenu item 2
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              Submenu item 3{" "}
-                            </a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Multi level 1
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  Multi level 2
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              Submenu item 4
-                            </a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">
-                              Submenu item 5
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
+                      </li> */}
                     </ul>
                   </li>
                   <li className="nav-item">
