@@ -10,6 +10,28 @@ html {
   position: relative;
   width: 100%;
 }
+/* header start */
+header .container {
+  overflow-x: unset;
+}
+header .dropdown-menu li {
+  position: relative;
+}
+header .dropdown-menu .dropdown-submenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: -7px;
+}
+header .dropdown-menu .dropdown-submenu-left {
+  right: 100%;
+  left: auto;
+}
+header .dropdown-menu > li:hover > .dropdown-submenu {
+  display: block;
+}
+/* header emd */
+
 .fiend_right .owl-controls {
   top: 0 !important;
 }
@@ -992,6 +1014,20 @@ a.btn-enroll {
 .fade:not(.show) {
   opacity: 1;
 }
+
+/* search start */
+.searchTerm {
+  padding: 5px 5px 5px 0px;
+}
+.searchTerm .rbt-input-main {
+  background: transparent;
+  border: 0px;
+  height: 50px;
+}
+.searchTerm .rbt-input-main:focus {
+  box-shadow: none;
+}
+/* search end */
 
 @media (min-width: 576px) {
   .modal-dialog {

@@ -10,6 +10,7 @@ import "../node_modules/font-awesome/css/font-awesome.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/owl.carousel/dist/assets/owl.carousel.css";
 import "../node_modules/owl.carousel/dist/assets/owl.theme.default.css";
+import "../node_modules/react-bootstrap-typeahead/css/Typeahead.css";
 import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

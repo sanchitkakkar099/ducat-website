@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchImg from "../assets/images/search.png";
 import TophImg from "../assets/images/top_h.png";
 import JavawImg from "../assets/images/javaw.png";
 import PythonImg from "../assets/images/Pythonw.png";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 function Banner() {
+  const [singleSelections, setSingleSelections] = useState([]);
+  const [first] = singleSelections;
+  console.log("singleSelections", first);
   return (
     <>
       <div className="row ">
@@ -17,11 +21,26 @@ function Banner() {
               <div className="input-group">
                 <div className="wrap">
                   <div className="search">
-                    <input
+                    {/* <input
                       type="text"
                       className="searchTerm"
                       placeholder="Search your favourite course today"
+                    /> */}
+                    <Typeahead
+                      id="basic-typeahead-single"
+                      labelKey="name"
+                      onChange={setSingleSelections}
+                      options={[
+                        { name: "Small" },
+                        { name: "Default" },
+                        { name: "Large" },
+                      ]}
+                      placeholder="Search your favourite course today"
+                      className="searchTerm"
+                      selected={singleSelections}
+                      highlightOnlyResult={true}
                     />
+
                     <button type="submit" className="searchButton">
                       <img src={SearchImg} />
                     </button>

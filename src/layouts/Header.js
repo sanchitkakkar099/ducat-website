@@ -1,9 +1,14 @@
 import React from "react";
 import Logo from "../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Header() {
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const courseDropdown = (e) => {
+    setShowDropdown(!showDropdown);
+  };
   return (
     <header>
       <div className="row">
@@ -45,31 +50,118 @@ function Header() {
                     </a>
                   </li>
                   <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" to="/course/1">
+                    <Link
+                      className="nav-link dropdown-toggle"
+                      to=""
+                      onClick={(e) => courseDropdown(e)}
+                    >
                       {" "}
                       Courses
                     </Link>
                     <ul
-                      className="dropdown-menu"
-                      aria-labelledby="navbarScrollingDropdown"
+                      className={`dropdown-menu ${showDropdown ? "show" : ""}`}
+                      aria-labelledby="dropdownMenuButton"
                     >
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#">
                           Action
                         </a>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
-                          Another action
+                        <a
+                          class="dropdown-item d-flex justify-content-between"
+                          href="#"
+                        >
+                          Submenu
+                          <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
                         </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 1
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 2
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 3{" "}
+                            </a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Multi level 1
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Multi level 2
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 4
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 5
+                            </a>
+                          </li>
+                        </ul>
                       </li>
                       <li>
-                        <hr className="dropdown-divider" />
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Something else here
+                        <a
+                          class="dropdown-item d-flex justify-content-between"
+                          href="#"
+                        >
+                          Submenu
+                          <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
                         </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 1
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 2
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 3{" "}
+                            </a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Multi level 1
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  Multi level 2
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 4
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">
+                              Submenu item 5
+                            </a>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                   </li>
