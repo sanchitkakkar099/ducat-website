@@ -15,9 +15,11 @@ import OwlCarousel from "react-owl-carousel";
 import { useCategoryListMutation } from "../../service";
 import { getCategory } from "../../redux/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function CategoryList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const categoryList = useSelector((state) => state.categoryState.categoryList);
   const [reqCategoryList, resCategoryList] = useCategoryListMutation();
   console.log("categoryList", categoryList);
@@ -69,7 +71,11 @@ function CategoryList() {
               categoryList?.length > 0
                 ? categoryList?.map((cd, i) => {
                     return (
-                      <div className="box">
+                      <div
+                        key={i}
+                        className="box"
+                        onClick={() => navigate(`/category/${cd?.name}`)}
+                      >
                         <img src={cd?.logo?.filepath} />
                         <p>{cd?.name}</p>
                       </div>

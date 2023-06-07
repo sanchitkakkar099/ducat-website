@@ -12,6 +12,7 @@ import { useBatchListMutation } from "../../service";
 import { useDispatch, useSelector } from "react-redux";
 import { getBatch } from "../../redux/batchSlice";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 function BatchList() {
   const dispatch = useDispatch();
@@ -84,14 +85,14 @@ function BatchList() {
                         <div className="content-in ">
                           <div className="post-news">
                             <h3 className="post-title">
-                              <a href="#">{bh?.course?.title}</a>
+                              <Link to="#">{bh?.course?.title}</Link>
                             </h3>
-                            <img
+                            {/* <img
                               src={StarImg}
                               alt=""
                               className="image-fliud"
                               style={{ width: "auto" }}
-                            />
+                            /> */}
                           </div>
                           <p className="post-description">
                             <span>
@@ -104,7 +105,7 @@ function BatchList() {
                               {dayjs(bh?.timing).format("YYYY-MM-DD")}
                             </span>
                           </p>
-                          <p
+                          {/* <p
                             style={{
                               color: "#F58733",
                               fontSize: "11px",
@@ -113,7 +114,7 @@ function BatchList() {
                             }}
                           >
                             No of students registered: 450
-                          </p>
+                          </p> */}
                           <a href="#" className="register">
                             Request a call back
                             <span>

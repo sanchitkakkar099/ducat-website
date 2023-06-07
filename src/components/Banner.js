@@ -5,8 +5,14 @@ import JavawImg from "../assets/images/javaw.png";
 import PythonImg from "../assets/images/Pythonw.png";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useDispatch, useSelector } from "react-redux";
-import { setCourseDropDown } from "../redux/courseSlice";
-import { useGetAllCourseDropdownQuery } from "../service";
+import {
+  setCategoryCourseDropDown,
+  setCourseDropDown,
+} from "../redux/courseSlice";
+import {
+  useGetAllCourseDropdownQuery,
+  useGetCategoryCourseDropdownQuery,
+} from "../service";
 import { useNavigate } from "react-router-dom";
 
 function Banner() {
@@ -15,10 +21,25 @@ function Banner() {
   const courseDropdown = useSelector(
     (state) => state.courseState.courseDropdown
   );
+  const categoryCourseDropdown = useSelector(
+    (state) => state.courseState.categoryCourseDropdown
+  );
+  const resCategoryCourseDropdown = useGetCategoryCourseDropdownQuery();
   const resCourseDropdown = useGetAllCourseDropdownQuery();
   const [singleSelections, setSingleSelections] = useState([]);
-  const [selectedCourse] = singleSelections;
-  console.log("singleSelections", selectedCourse);
+  const [selectedCategory] = singleSelections;
+  console.log("singleSelections", selectedCategory);
+
+  useEffect(() => {
+    if (
+      resCategoryCourseDropdown?.isSuccess &&
+      resCategoryCourseDropdown?.data?.data
+    ) {
+      dispatch(
+        setCategoryCourseDropDown(resCategoryCourseDropdown?.data?.data)
+      );
+    }
+  }, [resCategoryCourseDropdown]);
 
   useEffect(() => {
     if (resCourseDropdown?.isSuccess && resCourseDropdown?.data?.data) {
@@ -28,14 +49,18 @@ function Banner() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (selectedCourse) {
-      navigate(`/course/${selectedCourse?._id}`);
+    if (selectedCategory) {
+      navigate(`/category/${selectedCategory?.name}`, {
+        state: {
+          categoryView: selectedCategory,
+        },
+      });
     }
   };
 
   return (
     <>
-      <div className="row ">
+      <div className="row">
         <div className="container">
           <div className="top-header d-flex pb-5">
             <div className="col-md-6">
@@ -47,10 +72,10 @@ function Banner() {
                   <div className="search">
                     <Typeahead
                       id="basic-typeahead-single"
-                      labelKey="label"
+                      labelKey="name"
                       onChange={setSingleSelections}
-                      options={courseDropdown || []}
-                      placeholder="Search your favourite course today"
+                      options={categoryCourseDropdown || []}
+                      placeholder="Search your favourite course category today"
                       className="searchTerm"
                       selected={singleSelections}
                       highlightOnlyResult={true}

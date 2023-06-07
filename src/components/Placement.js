@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-function Abouts() {
+function Placement() {
   return (
     <div className="row pb-3 py-5">
       <div className="container">
-        <h2>About us</h2>
+        <h2>Placements</h2>
       </div>
     </div>
   );
 }
 
-export default Abouts;
+export default Placement;

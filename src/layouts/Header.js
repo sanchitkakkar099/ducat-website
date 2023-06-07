@@ -73,9 +73,9 @@ function Header() {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to={"/abouts"}>
                       About us
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item dropdown" ref={ref}>
                     <Link
@@ -91,7 +91,7 @@ function Header() {
                       aria-labelledby="dropdownMenuButton"
                     >
                       {/* <li>
-                        <a class="dropdown-item" href="#">
+                        <a className="dropdown-item" href="#">
                           Action
                         </a>
                       </li> */}
@@ -103,15 +103,15 @@ function Header() {
                             <li key={i}>
                               <Link
                                 to={""}
-                                class="dropdown-item d-flex justify-content-between"
+                                className="dropdown-item d-flex justify-content-between"
                               >
                                 {el?.name}
-                                <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
+                                <i className="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
                               </Link>
                               {el?.course &&
                                 Array.isArray(el?.course) &&
                                 el?.course?.length > 0 && (
-                                  <ul class="dropdown-menu dropdown-submenu">
+                                  <ul className="dropdown-menu dropdown-submenu">
                                     {el?.course &&
                                     Array.isArray(el?.course) &&
                                     el?.course?.length > 0
@@ -119,7 +119,7 @@ function Header() {
                                           return (
                                             <li key={cs?._id}>
                                               <Link
-                                                class="dropdown-item"
+                                                className="dropdown-item"
                                                 to={`/course/${cs?._id}`}
                                                 onClick={() =>
                                                   setShowDropdown(false)
@@ -138,47 +138,47 @@ function Header() {
                         })}
                       {/* <li>
                         <a
-                          class="dropdown-item d-flex justify-content-between"
+                          className="dropdown-item d-flex justify-content-between"
                           href="#"
                         >
                           Submenu
-                          <i class="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
+                          <i className="fa fa-angle-right float-end mt-1 d-none d-lg-block"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-submenu">
+                        <ul className="dropdown-menu dropdown-submenu">
                           <li>
-                            <a class="dropdown-item" href="#">
+                            <a className="dropdown-item" href="#">
                               Submenu item 1
                             </a>
                           </li>
                           <li>
-                            <a class="dropdown-item" href="#">
+                            <a className="dropdown-item" href="#">
                               Submenu item 2
                             </a>
                           </li>
                           <li>
-                            <a class="dropdown-item" href="#">
+                            <a className="dropdown-item" href="#">
                               Submenu item 3{" "}
                             </a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul className="dropdown-menu dropdown-submenu">
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a className="dropdown-item" href="#">
                                   Multi level 1
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a className="dropdown-item" href="#">
                                   Multi level 2
                                 </a>
                               </li>
                             </ul>
                           </li>
                           <li>
-                            <a class="dropdown-item" href="#">
+                            <a className="dropdown-item" href="#">
                               Submenu item 4
                             </a>
                           </li>
                           <li>
-                            <a class="dropdown-item" href="#">
+                            <a className="dropdown-item" href="#">
                               Submenu item 5
                             </a>
                           </li>
@@ -187,29 +187,24 @@ function Header() {
                     </ul>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/certificate">
                       Certificate
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/placement">
                       Placements
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/blog">
                       Blog
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a
-                      className="nav-link disabled btn_contact"
-                      href="#"
-                      tabindex="-1"
-                      aria-disabled="true"
-                    >
+                    <Link className="nav-link btn_contact" to="/contact-us">
                       Contact Us
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

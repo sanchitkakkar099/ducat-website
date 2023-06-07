@@ -56,6 +56,7 @@ function EnquiryForm() {
         position: "top-center",
       });
     }
+    reset({});
   }, [resEnquiry?.isSuccess]);
 
   return (
@@ -72,21 +73,18 @@ function EnquiryForm() {
             >
               <div className="row">
                 <div className="col-md-2 form-group ">
-                  {/* <input
-                    type="text"
-                    className="form-control"
-                    name="name"
-                    id="name"
-                    placeholder="Enter Name"
-                  /> */}
                   <Controller
                     id="name"
                     name="name"
                     className="form-control"
                     control={control}
                     rules={{ required: "Name is required" }}
-                    render={({ field }) => (
-                      <Input placeholder="Enquiry Name" {...field} />
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        placeholder="Enquiry Name"
+                        onChange={onChange}
+                        value={value ? value : ""}
+                      />
                     )}
                   />
                   {errors?.name && (
@@ -94,20 +92,18 @@ function EnquiryForm() {
                   )}
                 </div>
                 <div className="col-md-2 form-group ">
-                  {/* <input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    id="email"
-                    placeholder="Enter Email"
-                  /> */}
                   <Controller
                     id="email"
                     name="email"
                     className="form-control"
                     control={control}
-                    render={({ field }) => (
-                      <Input type="email" placeholder="Email" {...field} />
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        type="email"
+                        placeholder="Email"
+                        onChange={onChange}
+                        value={value ? value : ""}
+                      />
                     )}
                   />
                   {errors?.email && (
@@ -115,24 +111,18 @@ function EnquiryForm() {
                   )}
                 </div>
                 <div className="col-md-2 form-group ">
-                  {/* <input
-                    type="number"
-                    className="form-control"
-                    name="number"
-                    id="phone number"
-                    placeholder="Enter Contact Number"
-                  /> */}
                   <Controller
                     id="phone"
                     name="phone"
                     className="form-control"
                     control={control}
                     rules={{ required: "Phone Number is required" }}
-                    render={({ field }) => (
+                    render={({ field: { onChange, value } }) => (
                       <Input
                         type="number"
                         placeholder="Enquiry Phone Number"
-                        {...field}
+                        onChange={onChange}
+                        value={value ? value : ""}
                       />
                     )}
                   />

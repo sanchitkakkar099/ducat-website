@@ -14,6 +14,7 @@ import ImgFrame16 from "../../assets/images/Group (16).png";
 import { useCourseListMutation } from "../../service";
 import { getCourse } from "../../redux/courseSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function CourseList() {
   const dispatch = useDispatch();
@@ -77,16 +78,16 @@ function CourseList() {
                         </div>
                         <div className="content-in">
                           <h3 className="post-title">
-                            <a href="#">{cs?.title}</a>
+                            <Link to={`/course/${cs?._id}`}>{cs?.title}</Link>
                           </h3>
-                          <img
+                          {/* <img
                             src={StarImg}
                             alt=""
                             className="image-fliud"
                             style={{ width: "auto" }}
-                          />
+                          /> */}
                           <p className="post-description">{cs?.subtitle}</p>
-                          <p className="post-description">
+                          {/* <p className="post-description">
                             <span>
                               Duration: <strong>6 Months</strong>
                             </span>
@@ -96,7 +97,7 @@ function CourseList() {
                               Eligibility:{" "}
                               <strong>10+2 (Recognised Board)</strong>
                             </span>
-                          </p>
+                          </p> */}
                         </div>
                         <a href="#" className="download">
                           Download Brochure

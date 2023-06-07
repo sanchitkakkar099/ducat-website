@@ -11,10 +11,18 @@ const Home = lazy(() => import("../components/Home"));
 const Abouts = lazy(() => import("../components/Abouts"));
 const CourseView = lazy(() => import("../components/Course/CourseView"));
 const CategoryView = lazy(() => import("../components/Category/CategoryView"));
+const Certificate = lazy(() => import("../components/Certificate"));
+const Placement = lazy(() => import("../components/Placement"));
+const Blog = lazy(() => import("../components/Blog"));
+const ContactUs = lazy(() => import("../components/ContactUs"));
 
 export const pageRoutes = [
   { path: "/", Component: Home },
   { path: "/abouts", Component: Abouts },
   { path: "/course/:id", Component: CourseView },
-  { path: "/course-category/:id", Component: CategoryView },
+  { path: "/category/:slug", Component: CategoryView },
+  { path: "/certificate", Component: Certificate },
+  { path: "/placement", Component: Placement },
+  { path: "/blog", Component: Blog },
+  { path: "/contact-us", Component: ContactUs },
 ];
