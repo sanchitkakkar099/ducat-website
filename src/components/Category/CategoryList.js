@@ -12,7 +12,10 @@ import SlideImg17 from "../../assets/images/image17.png";
 import SlideImg18 from "../../assets/images/image18.png";
 import SlideImg19 from "../../assets/images/image19.png";
 import OwlCarousel from "react-owl-carousel";
-import { useCategoryListMutation } from "../../service";
+import {
+  useCategoryListMutation,
+  useHomeCategoryListMutation,
+} from "../../service";
 import { getCategory } from "../../redux/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +24,7 @@ function CategoryList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const categoryList = useSelector((state) => state.categoryState.categoryList);
-  const [reqCategoryList, resCategoryList] = useCategoryListMutation();
+  const [reqCategoryList, resCategoryList] = useHomeCategoryListMutation();
   console.log("categoryList", categoryList);
 
   useEffect(() => {
@@ -51,6 +54,15 @@ function CategoryList() {
     controlsClass: "owl-buttons",
     // navClass:['owl-prev','owl-next'],
   };
+
+  const navToCategoryView = (e, category) => {
+    e.preventDefault();
+    navigate(`/category/${category?.name}`, {
+      state: {
+        categoryView: category,
+      },
+    });
+  };
   return (
     <Fragment>
       <div className="row py-5 ">
@@ -74,7 +86,7 @@ function CategoryList() {
                       <div
                         key={i}
                         className="box"
-                        onClick={() => navigate(`/category/${cd?.name}`)}
+                        onClick={(e) => navToCategoryView(e, cd)}
                       >
                         <img src={cd?.logo?.filepath} />
                         <p>{cd?.name}</p>

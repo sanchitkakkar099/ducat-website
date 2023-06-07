@@ -64,6 +64,14 @@ export const categoryApi = createApi({
       }),
       providesTags: ["category"],
     }),
+    homeCategoryList: builder.mutation({
+      query: (payload) => ({
+        url: "course/category/drop/down/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["category"],
+    }),
     getAllCategoryDropdown: builder.query({
       query: () => ({
         url: "course/category/dropdown",
@@ -82,6 +90,7 @@ export const categoryApi = createApi({
 });
 export const {
   useCategoryListMutation,
+  useHomeCategoryListMutation,
   useGetAllCategoryDropdownQuery,
   useCategoryByIdQuery,
 } = categoryApi;
