@@ -8,27 +8,40 @@ import Img99 from "../../assets/images/image 99 (1).png";
 import Img100 from "../../assets/images/image 100.png";
 
 import AroImg from "../../assets/images/aro.png";
-import { useBatchListMutation } from "../../service";
+import {
+  useBatchListMutation,
+  useGetAllCenterDropdownQuery,
+} from "../../service";
 import { useDispatch, useSelector } from "react-redux";
 import { getBatch } from "../../redux/batchSlice";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { setCenterDropDown } from "../../redux/centerSlice";
 
 function BatchList() {
   const dispatch = useDispatch();
   const batchList = useSelector((state) => state.batchState.batchList);
+  const centerDropdown = useSelector(
+    (state) => state.centerState.centerDropdown
+  );
+  const [firstCenter] = centerDropdown;
   const [reqBatchData, resBathData] = useBatchListMutation();
-  const [isBatchList, setIsBatchList] = useState(false);
-  console.log("batchList", batchList);
+  const resCenterDropdown = useGetAllCenterDropdownQuery();
+  const [selectedCenter, setSelectedCenter] = useState(null);
+  useEffect(() => {
+    if (resCenterDropdown?.isSuccess && resCenterDropdown?.data?.data) {
+      dispatch(setCenterDropDown(resCenterDropdown?.data?.data));
+    }
+  }, [resCenterDropdown]);
 
   useEffect(() => {
     reqBatchData({
       page: 1,
       limit: 10,
-      search: "",
+      search: selectedCenter ? selectedCenter : firstCenter?.label,
       status: "Active",
     });
-  }, []);
+  }, [selectedCenter, firstCenter]);
 
   useEffect(() => {
     if (resBathData?.isSuccess) {
@@ -52,11 +65,10 @@ function BatchList() {
     // callbacks: true,
   };
 
-  useEffect(() => {
-    if (batchList && Array.isArray(batchList) && batchList?.length > 0) {
-      setIsBatchList(true);
-    }
-  }, [batchList]);
+  const filterCenter = (e) => {
+    e.preventDefault();
+    setSelectedCenter(e.target.value);
+  };
   return (
     <div className="row pb-3 py-5">
       <div className="container">
@@ -65,11 +77,20 @@ function BatchList() {
           <div className="location">
             <span>
               Choose your Location
-              <select className="form-select">
-                <option>Sector 16, Noida</option>
-                <option>Sector 8, Faridabad</option>
-                <option>Sector 5, Gurugram</option>
-                <option>Rohini Dehli</option>
+              <select className="form-select" onChange={(e) => filterCenter(e)}>
+                {centerDropdown &&
+                Array.isArray(centerDropdown) &&
+                centerDropdown?.length > 0 ? (
+                  centerDropdown?.map((el, i) => {
+                    return (
+                      <option key={i} value={el?.label}>
+                        {el?.label}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <options>No Center Found</options>
+                )}
               </select>
             </span>
           </div>

@@ -445,7 +445,7 @@ nav > div a.nav-item.nav-link {
   width: 100% !important;
   text-align: right;
   right: 0;
-  width: max-content;
+  width: max-content !important;
 }
 .carousel_logo .owl-controls .owl-buttons {
   margin: 0px;
