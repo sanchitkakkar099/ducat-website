@@ -1029,6 +1029,15 @@ a.btn-enroll {
 }
 /* search end */
 
+/* form error */
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.857rem;
+  color: #ea5455;
+}
+
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 780px;

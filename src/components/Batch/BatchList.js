@@ -36,34 +36,56 @@ function BatchList() {
   }, [resCenterDropdown]);
 
   useEffect(() => {
-    reqBatchData({
-      page: 1,
-      limit: 10,
-      search: "",
-      center_id: selectedCenter ? selectedCenter : firstCenter?._id,
-      status: "Active",
-    });
+    if (selectedCenter) {
+      reqBatchData({
+        page: 1,
+        limit: 10,
+        search: "",
+        center_id: selectedCenter,
+        status: "Active",
+      });
+    } else if (firstCenter) {
+      reqBatchData({
+        page: 1,
+        limit: 10,
+        search: "",
+        center_id: firstCenter?._id,
+        status: "Active",
+      });
+    }
   }, [selectedCenter, firstCenter]);
 
   useEffect(() => {
-    if (resBathData?.isSuccess) {
+    if (resBathData?.isSuccess && !selectedCenter && firstCenter) {
+      dispatch(getBatch(resBathData?.data?.data?.docs));
+      // setPageCount(resBathData?.data?.data?.totalDocs);
+    } else if (resBathData?.isSuccess && selectedCenter) {
       dispatch(getBatch(resBathData?.data?.data?.docs));
       // setPageCount(resBathData?.data?.data?.totalDocs);
     }
-  }, [resBathData]);
+  }, [resBathData?.isSuccess, selectedCenter, firstCenter]);
 
   const options = {
     responsiveClass: true,
-    nav: true,
+    nav:
+      batchList && Array.isArray(batchList) && batchList?.length > 2
+        ? true
+        : false,
     autoplay: true,
     smartSpeed: 1000,
     dots: false,
     items: 4.5,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
-    navContainerClass: "owl-controls owl-buttons",
-    navClass: ["owl-prev", "owl-next"],
-    loop: true,
+    navContainerClass:
+      batchList && Array.isArray(batchList) && batchList?.length > 2
+        ? "owl-controls owl-buttons"
+        : "",
+    navClass: "",
+    loop:
+      batchList && Array.isArray(batchList) && batchList?.length === 1
+        ? false
+        : true,
   };
 
   const filterCenter = (e) => {

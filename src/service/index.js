@@ -40,6 +40,14 @@ export const courseApi = createApi({
       }),
       providesTags: ["course"],
     }),
+    relatedCourseByCategoryId: builder.mutation({
+      query: (payload) => ({
+        url: "course/list/relatedcategory",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["course"],
+    }),
   }),
 });
 export const {
@@ -47,6 +55,7 @@ export const {
   useGetAllCourseDropdownQuery,
   useGetCategoryCourseDropdownQuery,
   useCourseByIdQuery,
+  useRelatedCourseByCategoryIdMutation,
 } = courseApi;
 
 export const categoryApi = createApi({

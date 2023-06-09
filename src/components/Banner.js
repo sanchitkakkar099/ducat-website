@@ -97,7 +97,7 @@ function Banner() {
           </div>
         </div>
       </div>
-      <div className="row" style={{ backgroundColor: "#2C72D5" }}>
+      {/* <div className="row" style={{ backgroundColor: "#2C72D5" }}>
         <div className="container">
           <div className="col-md-12">
             <div className="box-outer_1">
@@ -120,7 +120,7 @@ function Banner() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

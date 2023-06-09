@@ -37,6 +37,10 @@ function Header() {
   const courseDropdown = (e) => {
     setShowDropdown(!showDropdown);
   };
+
+  const onCourseSelect = (cs) => {
+    setShowDropdown(false);
+  };
   return (
     <header>
       <div className="row">
@@ -122,7 +126,7 @@ function Header() {
                                                 className="dropdown-item"
                                                 to={`/course/${cs?._id}`}
                                                 onClick={() =>
-                                                  setShowDropdown(false)
+                                                  onCourseSelect(cs)
                                                 }
                                               >
                                                 {cs?.title}

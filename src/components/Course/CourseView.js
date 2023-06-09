@@ -3,6 +3,7 @@ import {
   useCourseByIdQuery,
   useGetAllCenterDropdownQuery,
   useGetAllCourseDropdownQuery,
+  useRelatedCourseByCategoryIdMutation,
   useSubmitEnquiryMutation,
 } from "../../service";
 import { Controller, useForm } from "react-hook-form";
@@ -36,8 +37,13 @@ function CourseView() {
   const resCourseDropdown = useGetAllCourseDropdownQuery();
   const resCenterDropdown = useGetAllCenterDropdownQuery();
   const resCourseById = useCourseByIdQuery(params?.id);
+  const [reqCourseByCategoryId, resCourseByCategoryId] =
+    useRelatedCourseByCategoryIdMutation();
+  console.log("resCourseByCategoryId", resCourseByCategoryId);
 
   const [activeTab, setActiveTab] = useState("about");
+  const [relatedCourse, setRelatedCourse] = useState([]);
+  console.log("relatedCourse", relatedCourse);
 
   const {
     control,
@@ -45,6 +51,23 @@ function CourseView() {
     formState: { errors },
     reset,
   } = useForm();
+
+  useEffect(() => {
+    if (courseViewData?.course_category?.value) {
+      reqCourseByCategoryId({
+        categoryid: courseViewData?.course_category?.value,
+      });
+    }
+  }, [courseViewData]);
+
+  useEffect(() => {
+    if (resCourseByCategoryId?.isSuccess && resCourseByCategoryId?.data?.data) {
+      const filterCourse = resCourseByCategoryId?.data?.data?.filter(
+        (el) => el?._id !== courseViewData?._id
+      );
+      setRelatedCourse(filterCourse);
+    }
+  }, [resCourseByCategoryId]);
 
   useEffect(() => {
     if (resCourseById?.isSuccess) {
@@ -167,6 +190,7 @@ function CourseView() {
                           name="email"
                           className="form-control"
                           control={control}
+                          rules={{ required: "Email is required" }}
                           render={({ field: { onChange, value } }) => (
                             <Input
                               type="email"
@@ -321,10 +345,22 @@ function CourseView() {
         <div className="container">
           <div className="col-md-12">
             <div className="box-outer_1">
-              <div className="box_1">
-                <img src={JavawImg} />
-                <p>Learn The Essential Skills</p>
-              </div>
+              {relatedCourse &&
+                Array.isArray(relatedCourse) &&
+                relatedCourse?.length > 0 &&
+                relatedCourse?.map((el) => {
+                  return (
+                    <div className="box_1" key={el?._id}>
+                      {el?.image?.filepath ? (
+                        <img src={el?.image?.filepath} height={45} width={90} />
+                      ) : (
+                        <img src={JavawImg} height={45} width={90} />
+                      )}
+                      <p>{el?.title}</p>
+                    </div>
+                  );
+                })}
+
               <div className="box_1">
                 <img src={PythonImg} />
                 <p>Earn Cerficate And Degrees</p>

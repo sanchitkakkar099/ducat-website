@@ -97,6 +97,7 @@ function EnquiryForm() {
                     name="email"
                     className="form-control"
                     control={control}
+                    rules={{ required: "Email is required" }}
                     render={({ field: { onChange, value } }) => (
                       <Input
                         type="email"
