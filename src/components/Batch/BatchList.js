@@ -106,7 +106,15 @@ function BatchList() {
                   <div className="post-slide" key={i}>
                     <div className="post-content">
                       <div className="star_img_outer">
-                        <img src={Img96} alt="" className="hetchs" />
+                        {bh?.course?.image?.filepath ? (
+                          <img
+                            src={bh?.course?.image?.filepath}
+                            alt=""
+                            className="hetchs"
+                          />
+                        ) : (
+                          <img src={Img96} alt="" className="hetchs" />
+                        )}
                       </div>
                       <div className="content-in ">
                         <div className="post-news">

@@ -73,7 +73,15 @@ function CourseList() {
                   <div className="post-slide" key={i}>
                     <div className="post-content">
                       <div className="img_hetch">
-                        <img src={ImgFram21} alt="" className="hetch" />
+                        {cs?.image?.filepath ? (
+                          <img
+                            src={cs?.image?.filepath}
+                            alt=""
+                            className="hetch"
+                          />
+                        ) : (
+                          <img src={ImgFram21} alt="" className="hetch" />
+                        )}
                       </div>
                       <div className="content-in">
                         <h3 className="post-title">

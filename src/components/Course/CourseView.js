@@ -31,6 +31,7 @@ function CourseView() {
     (state) => state.centerState.centerDropdown
   );
   const courseViewData = useSelector((state) => state.courseState.courseView);
+
   const [reqEnquiry, resEnquiry] = useSubmitEnquiryMutation();
   const resCourseDropdown = useGetAllCourseDropdownQuery();
   const resCenterDropdown = useGetAllCenterDropdownQuery();
@@ -100,7 +101,15 @@ function CourseView() {
             <div className="top-header d-flex top-header-singal">
               <div className="col-md-8 pr-5">
                 <span className="d-flex " style={{ alignItems: "center" }}>
-                  <img src={Img8} />
+                  {courseViewData?.image?.filepath ? (
+                    <img
+                      src={courseViewData?.image?.filepath}
+                      height={65}
+                      width={81}
+                    />
+                  ) : (
+                    <img src={Img8} />
+                  )}
                   <p className="ml-3 mb-0" style={{ fontSize: "32px" }}>
                     {courseViewData?.title}
                   </p>
