@@ -49,8 +49,7 @@ function CourseList() {
     stageClass: "owl-wrapper",
     navContainerClass: "owl-controls owl-buttons",
     navClass: ["owl-prev", "owl-next"],
-
-    // callbacks: true,
+    loop: true,
   };
 
   useEffect(() => {
@@ -63,31 +62,31 @@ function CourseList() {
       <div className="container">
         <div className="col-md-12">
           <h2 className="text-left pop h23">Find the Right Course for You</h2>
-          <OwlCarousel
-            className="owl-theme fiend_right"
-            id="news-slider"
-            {...options}
-          >
-            {courseList && Array.isArray(courseList) && courseList?.length > 0
-              ? courseList?.map((cs, i) => {
-                  return (
-                    <div className="post-slide" key={i}>
-                      <div className="post-content">
-                        <div className="img_hetch">
-                          <img src={ImgFram21} alt="" className="hetch" />
-                        </div>
-                        <div className="content-in">
-                          <h3 className="post-title">
-                            <Link to={`/course/${cs?._id}`}>{cs?.title}</Link>
-                          </h3>
-                          {/* <img
+          {courseList && Array.isArray(courseList) && courseList?.length > 0 ? (
+            <OwlCarousel
+              className="owl-theme fiend_right"
+              id="news-slider"
+              {...options}
+            >
+              {courseList?.map((cs, i) => {
+                return (
+                  <div className="post-slide" key={i}>
+                    <div className="post-content">
+                      <div className="img_hetch">
+                        <img src={ImgFram21} alt="" className="hetch" />
+                      </div>
+                      <div className="content-in">
+                        <h3 className="post-title">
+                          <Link to={`/course/${cs?._id}`}>{cs?.title}</Link>
+                        </h3>
+                        {/* <img
                             src={StarImg}
                             alt=""
                             className="image-fliud"
                             style={{ width: "auto" }}
                           /> */}
-                          <p className="post-description">{cs?.subtitle}</p>
-                          {/* <p className="post-description">
+                        <p className="post-description">{cs?.subtitle}</p>
+                        {/* <p className="post-description">
                             <span>
                               Duration: <strong>6 Months</strong>
                             </span>
@@ -98,24 +97,24 @@ function CourseList() {
                               <strong>10+2 (Recognised Board)</strong>
                             </span>
                           </p> */}
-                        </div>
-                        <a href="#" className="download">
-                          Download Brochure
-                          <span>
-                            <img
-                              src={DownImg}
-                              alt=""
-                              className="image-fliud"
-                              style={{ width: "auto" }}
-                            />
-                          </span>
-                        </a>
                       </div>
+                      <a href="#" className="download">
+                        Download Brochure
+                        <span>
+                          <img
+                            src={DownImg}
+                            alt=""
+                            className="image-fliud"
+                            style={{ width: "auto" }}
+                          />
+                        </span>
+                      </a>
                     </div>
-                  );
-                })
-              : "No Course Found"}
-            <div className="post-slide">
+                  </div>
+                );
+              })}
+
+              {/* <div className="post-slide">
               <div className="post-content">
                 <div className="img_hetch">
                   <img src={ImgFrame19} alt="" className="hetch" />
@@ -384,8 +383,8 @@ function CourseList() {
                   </span>
                 </a>
               </div>
-            </div>
-            {/* <div className="post-slide">
+            </div> */}
+              {/* <div className="post-slide">
               <div className="post-content">
                 <div className="img_hetch">
                   <img src={ImgFram21} alt="" className="hetch" />
@@ -430,7 +429,10 @@ function CourseList() {
                 </a>
               </div>
             </div> */}
-          </OwlCarousel>
+            </OwlCarousel>
+          ) : (
+            "No Course Found"
+          )}
           {/* <div class="owl-controls clickable">
             <div className="owl-buttons">
               <div className="owl-prev">prev</div>

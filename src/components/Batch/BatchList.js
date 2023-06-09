@@ -21,6 +21,7 @@ import { setCenterDropDown } from "../../redux/centerSlice";
 function BatchList() {
   const dispatch = useDispatch();
   const batchList = useSelector((state) => state.batchState.batchList);
+  console.log("batchList", batchList);
   const centerDropdown = useSelector(
     (state) => state.centerState.centerDropdown
   );
@@ -38,7 +39,8 @@ function BatchList() {
     reqBatchData({
       page: 1,
       limit: 10,
-      search: selectedCenter ? selectedCenter : firstCenter?.label,
+      search: "",
+      center_id: selectedCenter ? selectedCenter : firstCenter?._id,
       status: "Active",
     });
   }, [selectedCenter, firstCenter]);
@@ -61,8 +63,7 @@ function BatchList() {
     stageClass: "owl-wrapper",
     navContainerClass: "owl-controls owl-buttons",
     navClass: ["owl-prev", "owl-next"],
-
-    // callbacks: true,
+    loop: true,
   };
 
   const filterCenter = (e) => {
@@ -83,7 +84,7 @@ function BatchList() {
                 centerDropdown?.length > 0 ? (
                   centerDropdown?.map((el, i) => {
                     return (
-                      <option key={i} value={el?.label}>
+                      <option key={i} value={el?._id}>
                         {el?.label}
                       </option>
                     );
@@ -94,39 +95,43 @@ function BatchList() {
               </select>
             </span>
           </div>
-          <OwlCarousel id="course-slider" {...options} className="slider-first">
-            {batchList && Array.isArray(batchList) && batchList?.length > 0
-              ? batchList?.map((bh, i) => {
-                  return (
-                    <div className="post-slide" key={i}>
-                      <div className="post-content">
-                        <div className="star_img_outer">
-                          <img src={Img96} alt="" className="hetchs" />
-                        </div>
-                        <div className="content-in ">
-                          <div className="post-news">
-                            <h3 className="post-title">
-                              <Link to="#">{bh?.course?.title}</Link>
-                            </h3>
-                            {/* <img
+          {batchList && Array.isArray(batchList) && batchList?.length > 0 ? (
+            <OwlCarousel
+              id="course-slider"
+              {...options}
+              className="slider-first"
+            >
+              {batchList?.map((bh, i) => {
+                return (
+                  <div className="post-slide" key={i}>
+                    <div className="post-content">
+                      <div className="star_img_outer">
+                        <img src={Img96} alt="" className="hetchs" />
+                      </div>
+                      <div className="content-in ">
+                        <div className="post-news">
+                          <h3 className="post-title">
+                            <Link to="#">{bh?.course?.title}</Link>
+                          </h3>
+                          {/* <img
                               src={StarImg}
                               alt=""
                               className="image-fliud"
                               style={{ width: "auto" }}
                             /> */}
-                          </div>
-                          <p className="post-description">
-                            <span>
-                              Branch: {bh?.center?.title}, {bh?.center?.address}
-                            </span>
-                          </p>
-                          <p className="post-description">
-                            <span>
-                              Starting Date:{" "}
-                              {dayjs(bh?.timing).format("YYYY-MM-DD")}
-                            </span>
-                          </p>
-                          {/* <p
+                        </div>
+                        <p className="post-description">
+                          <span>
+                            Branch: {bh?.center?.title}, {bh?.center?.address}
+                          </span>
+                        </p>
+                        <p className="post-description">
+                          <span>
+                            Starting Date:{" "}
+                            {dayjs(bh?.timing).format("YYYY-MM-DD")}
+                          </span>
+                        </p>
+                        {/* <p
                             style={{
                               color: "#F58733",
                               fontSize: "11px",
@@ -136,24 +141,23 @@ function BatchList() {
                           >
                             No of students registered: 450
                           </p> */}
-                          <a href="#" className="register">
-                            Request a call back
-                            <span>
-                              <img
-                                src={AroImg}
-                                alt=""
-                                className="image-fliud"
-                                style={{ width: "auto" }}
-                              />
-                            </span>
-                          </a>
-                        </div>
+                        <a href="#" className="register">
+                          Request a call back
+                          <span>
+                            <img
+                              src={AroImg}
+                              alt=""
+                              className="image-fliud"
+                              style={{ width: "auto" }}
+                            />
+                          </span>
+                        </a>
                       </div>
                     </div>
-                  );
-                })
-              : "No Batch Found"}
-            <div className="post-slide">
+                  </div>
+                );
+              })}
+              {/* <div className="post-slide">
               <div className="post-content">
                 <div className="star_img_outer">
                   <img src={Img96} alt="" className="hetchs" />
@@ -387,8 +391,11 @@ function BatchList() {
                   </a>
                 </div>
               </div>
-            </div>
-          </OwlCarousel>
+            </div> */}
+            </OwlCarousel>
+          ) : (
+            "No Batch Found"
+          )}
           {/* <div class="owl-controls clickable">
             <div className="owl-buttons">
               <div className="owl-prev"></div>

@@ -52,7 +52,7 @@ function CategoryList() {
     items: 6,
     navContainerClass: "owl-controls clickable",
     controlsClass: "owl-buttons",
-    // navClass:['owl-prev','owl-next'],
+    loop: true,
   };
 
   const navToCategoryView = (e, category) => {
@@ -73,9 +73,9 @@ function CategoryList() {
               style={{ fontWeight: 600 }}
             >
               Explore our course categories{" "}
-              <span>
+              {/* <span>
                 <a href="#">View All</a>
-              </span>
+              </span> */}
             </h2>
             <div className="box-outer pt-5">
               {categoryList &&
@@ -95,7 +95,7 @@ function CategoryList() {
                   })
                 : "No Cetgory Found"}
             </div>
-            <div className="box-outer pt-5">
+            {/* <div className="box-outer pt-5">
               <div className="box">
                 <img src={Img8} />
                 <p>java</p>
@@ -123,7 +123,7 @@ function CategoryList() {
             </div>
             <div className="btn_outer">
               <a href="#">Explore more courses</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
