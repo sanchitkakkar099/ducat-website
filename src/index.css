@@ -11,6 +11,9 @@ html {
   width: 100%;
 }
 /* header start */
+.container.top__banner {
+  overflow-x: clip;
+}
 header .container {
   overflow-x: unset;
 }
@@ -158,12 +161,16 @@ nav > div a.nav-item.nav-link {
   max-height: 100px;
   min-height: 60px;
 }
+.box-outer .box {
+  cursor: pointer;
+}
 .box img {
-  min-height: 90px;
-  min-width: 50px;
+  min-height: 60px;
+  min-width: 60px;
   width: 60px;
-  object-fit: scale-down;
   margin: 0 auto;
+  object-fit: cover;
+  object-position: 100% 100%;
 }
 .our-h2 {
   display: flex;
@@ -237,11 +244,23 @@ nav > div a.nav-item.nav-link {
   margin-top: 40px;
   position: relative;
 }
+.post-slide a:hover {
+  color: #fff;
+}
 .post-slide .post-date {
   width: 80px;
   background: #a2397b;
   float: left;
   padding: 15px 0;
+}
+.not_found {
+  margin: 40px;
+  width: 100%;
+  font-size: 20px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  display: block;
 }
 .post-slide:hover .post-date {
   background: #3498db;
@@ -263,6 +282,11 @@ nav > div a.nav-item.nav-link {
 .post-slide .post-content img {
   width: 100%;
   height: auto;
+}
+.post-slide .post-content .hetch {
+  width: 80px !important;
+  height: 80px;
+  object-fit: cover !important;
 }
 .post-slide .post-title {
   margin: 0px;
@@ -316,7 +340,9 @@ nav > div a.nav-item.nav-link {
   margin-left: 10px;
   font-size: 10px;
 }
-
+.Course__input::placeholder {
+  font-size: 12px;
+}
 .owl-controls .owl-prev,
 .owl-controls .owl-next {
   display: inline-block;
@@ -438,6 +464,20 @@ nav > div a.nav-item.nav-link {
 .carousel_logo .owl-next:focus {
   outline: none;
 }
+.bg-light-course .home_custom .form-group {
+  margin-bottom: 25px !important;
+  position: relative;
+}
+.bg-light-course .home_custom .form-group input {
+  margin-bottom: 0px !important;
+}
+.bg-light-course .home_custom .form-group .invalid-feedback {
+  position: absolute;
+  top: 28px;
+}
+.bg-light-course .top-im {
+  margin-bottom: 20px;
+}
 .owl-carousel.owl-loaded .owl-controls {
   margin: 0px;
   position: absolute;
@@ -445,7 +485,7 @@ nav > div a.nav-item.nav-link {
   width: 100% !important;
   text-align: right;
   right: 0;
-  width: max-content !important;
+  width: -webkit-fill-available !important;
 }
 .carousel_logo .owl-controls .owl-buttons {
   margin: 0px;
@@ -745,7 +785,7 @@ a:hover {
   font-weight: 700;
 }
 .form input {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .custom-select {
   font-size: 12px !important;

@@ -61,7 +61,15 @@ function CourseList() {
     <div className="row pb-3 slider-outer py-5">
       <div className="container">
         <div className="col-md-12">
-          <h2 className="text-left pop h23">Find the Right Course for You</h2>
+          <h2
+            className={`text-left ${
+              courseList && Array.isArray(courseList) && !courseList?.length
+                ? ""
+                : "pop"
+            }  h23`}
+          >
+            Find the Right Course for You
+          </h2>
           {courseList && Array.isArray(courseList) && courseList?.length > 0 ? (
             <OwlCarousel
               className="owl-theme fiend_right"
@@ -439,7 +447,7 @@ function CourseList() {
             </div> */}
             </OwlCarousel>
           ) : (
-            "No Course Found"
+            <p className="not_found">No Course Found</p>
           )}
           {/* <div class="owl-controls clickable">
             <div className="owl-buttons">

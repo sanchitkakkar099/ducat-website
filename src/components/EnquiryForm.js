@@ -59,6 +59,30 @@ function EnquiryForm() {
     reset({});
   }, [resEnquiry?.isSuccess]);
 
+  const selectStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      fontSize: "12px",
+    }),
+    control: (base) => ({
+      ...base,
+      height: "32px",
+      minHeight: "32px",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      marginBottom: "5px",
+      fontSize: "12px",
+    }),
+    placeholder: (defaultStyles) => {
+      return {
+        ...defaultStyles,
+        fontSize: "13px",
+        marginBottom: "5px",
+      };
+    },
+  };
+
   return (
     <div className="row" style={{ backgroundColor: "#285999" }}>
       <div className="container-fluid">
@@ -153,6 +177,7 @@ function EnquiryForm() {
                         classNamePrefix="Select a Course"
                         onChange={onChange}
                         value={value ? value : null}
+                        styles={selectStyles}
                       />
                     )}
                   />
@@ -182,6 +207,7 @@ function EnquiryForm() {
                         classNamePrefix="select"
                         onChange={onChange}
                         value={value ? value : null}
+                        styles={selectStyles}
                       />
                     )}
                   />

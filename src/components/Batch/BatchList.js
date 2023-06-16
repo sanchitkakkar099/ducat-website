@@ -6,34 +6,72 @@ import Img97 from "../../assets/images/image 97.png";
 import Img98 from "../../assets/images/image 98.png";
 import Img99 from "../../assets/images/image 99 (1).png";
 import Img100 from "../../assets/images/image 100.png";
+import Select from "react-select";
+import { toast } from "react-hot-toast";
 
 import AroImg from "../../assets/images/aro.png";
 import {
   useBatchListMutation,
   useGetAllCenterDropdownQuery,
+  useGetAllCourseDropdownQuery,
+  useSubmitEnquiryMutation,
 } from "../../service";
 import { useDispatch, useSelector } from "react-redux";
 import { getBatch } from "../../redux/batchSlice";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { setCenterDropDown } from "../../redux/centerSlice";
+import {
+  Button,
+  FormFeedback,
+  Input,
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from "reactstrap";
+import { Controller, useForm } from "react-hook-form";
+import { setCourseDropDown } from "../../redux/courseSlice";
 
 function BatchList() {
   const dispatch = useDispatch();
   const batchList = useSelector((state) => state.batchState.batchList);
   console.log("batchList", batchList);
+  const courseDropdown = useSelector(
+    (state) => state.courseState.courseDropdown
+  );
   const centerDropdown = useSelector(
     (state) => state.centerState.centerDropdown
   );
   const [firstCenter] = centerDropdown;
   const [reqBatchData, resBathData] = useBatchListMutation();
+  const resCourseDropdown = useGetAllCourseDropdownQuery();
   const resCenterDropdown = useGetAllCenterDropdownQuery();
+  const [reqEnquiry, resEnquiry] = useSubmitEnquiryMutation();
+
   const [selectedCenter, setSelectedCenter] = useState(null);
+
+  // Modal open state
+  const [modal, setModal] = React.useState(false);
+
+  // Toggle for Modal
+  const toggle = () => setModal(!modal);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+  } = useForm();
+
   useEffect(() => {
     if (resCenterDropdown?.isSuccess && resCenterDropdown?.data?.data) {
       dispatch(setCenterDropDown(resCenterDropdown?.data?.data));
     }
-  }, [resCenterDropdown]);
+    if (resCourseDropdown?.isSuccess && resCourseDropdown?.data?.data) {
+      dispatch(setCourseDropDown(resCourseDropdown?.data?.data));
+    }
+  }, [resCenterDropdown, resCourseDropdown]);
 
   useEffect(() => {
     if (selectedCenter) {
@@ -67,101 +105,141 @@ function BatchList() {
 
   const options = {
     responsiveClass: true,
-    nav:
-      batchList && Array.isArray(batchList) && batchList?.length > 2
-        ? true
-        : false,
+    nav: true,
     autoplay: true,
     smartSpeed: 1000,
     dots: false,
     items: 4.5,
     stageOuterClass: "owl-wrapper-outer",
     stageClass: "owl-wrapper",
-    navContainerClass:
-      batchList && Array.isArray(batchList) && batchList?.length > 2
-        ? "owl-controls owl-buttons"
-        : "",
-    navClass: "",
+    navContainerClass: "owl-controls owl-buttons",
     loop:
-      batchList && Array.isArray(batchList) && batchList?.length === 1
-        ? false
-        : true,
+      batchList && Array.isArray(batchList) && batchList?.length > 1
+        ? true
+        : false,
   };
 
   const filterCenter = (e) => {
     e.preventDefault();
     setSelectedCenter(e.target.value);
   };
+  const onNext = (state) => {
+    const reqData = {
+      ...state,
+      status: "Active",
+      course: state?.course?.value,
+      center: state?.center?.value,
+    };
+    reqEnquiry(reqData);
+  };
+
+  useEffect(() => {
+    if (resEnquiry?.isSuccess) {
+      reset();
+      toast.success(resEnquiry?.data?.message, {
+        position: "top-center",
+      });
+      reset();
+    }
+  }, [resEnquiry?.isSuccess]);
+
+  const selectStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      fontSize: "12px",
+    }),
+    control: (base) => ({
+      ...base,
+      height: "32px",
+      minHeight: "32px",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      marginBottom: "5px",
+      fontSize: "12px",
+    }),
+    placeholder: (defaultStyles) => {
+      return {
+        ...defaultStyles,
+        fontSize: "13px",
+        marginBottom: "5px",
+      };
+    },
+  };
   return (
-    <div className="row pb-3 py-5">
-      <div className="container">
-        <div className="col-md-12">
-          <h2 className="text-left pop h23">Upcoming Batches</h2>
-          <div className="location">
-            <span>
-              Choose your Location
-              <select className="form-select" onChange={(e) => filterCenter(e)}>
-                {centerDropdown &&
-                Array.isArray(centerDropdown) &&
-                centerDropdown?.length > 0 ? (
-                  centerDropdown?.map((el, i) => {
-                    return (
-                      <option key={i} value={el?._id}>
-                        {el?.label}
-                      </option>
-                    );
-                  })
-                ) : (
-                  <options>No Center Found</options>
-                )}
-              </select>
-            </span>
-          </div>
-          {batchList && Array.isArray(batchList) && batchList?.length > 0 ? (
-            <OwlCarousel
-              id="course-slider"
-              {...options}
-              className="slider-first"
-            >
-              {batchList?.map((bh, i) => {
-                return (
-                  <div className="post-slide" key={i}>
-                    <div className="post-content">
-                      <div className="star_img_outer">
-                        {bh?.course?.image?.filepath ? (
-                          <img
-                            src={bh?.course?.image?.filepath}
-                            alt=""
-                            className="hetchs"
-                          />
-                        ) : (
-                          <img src={Img96} alt="" className="hetchs" />
-                        )}
-                      </div>
-                      <div className="content-in ">
-                        <div className="post-news">
-                          <h3 className="post-title">
-                            <Link to="#">{bh?.course?.title}</Link>
-                          </h3>
-                          {/* <img
+    <>
+      <div className="row pb-3 py-5">
+        <div className="container">
+          <div className="col-md-12">
+            <h2 className="text-left pop h23">Upcoming Batches</h2>
+            <div className="location">
+              <span>
+                Choose your Location
+                <select
+                  className="form-select"
+                  onChange={(e) => filterCenter(e)}
+                >
+                  {centerDropdown &&
+                  Array.isArray(centerDropdown) &&
+                  centerDropdown?.length > 0 ? (
+                    centerDropdown?.map((el, i) => {
+                      return (
+                        <option key={i} value={el?._id}>
+                          {el?.label}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <options>No Center Found</options>
+                  )}
+                </select>
+              </span>
+            </div>
+            {batchList && Array.isArray(batchList) && batchList?.length > 0 ? (
+              <OwlCarousel
+                id="course-slider"
+                {...options}
+                className="slider-first"
+              >
+                {batchList?.map((bh, i) => {
+                  return (
+                    <div className="post-slide" key={i}>
+                      <div className="post-content">
+                        <div className="star_img_outer">
+                          {bh?.course?.image?.filepath ? (
+                            <img
+                              src={bh?.course?.image?.filepath}
+                              alt=""
+                              className="hetchs"
+                            />
+                          ) : (
+                            <img src={Img96} alt="" className="hetchs" />
+                          )}
+                        </div>
+                        <div className="content-in ">
+                          <div className="post-news">
+                            <h3 className="post-title">
+                              <Link to="#">{bh?.course?.title}</Link>
+                            </h3>
+                            {/* <img
                               src={StarImg}
                               alt=""
                               className="image-fliud"
                               style={{ width: "auto" }}
                             /> */}
-                        </div>
-                        <p className="post-description">
-                          <span>
-                            Branch: {bh?.center?.title}, {bh?.center?.address}
-                          </span>
-                        </p>
-                        <p className="post-description">
-                          <span>
-                            Starting Date:{" "}
-                            {dayjs(bh?.timing).format("YYYY-MM-DD")}
-                          </span>
-                        </p>
-                        {/* <p
+                          </div>
+                          <p className="post-description">
+                            <span>
+                              Branch: {bh?.center?.title}, {bh?.center?.address}
+                            </span>
+                          </p>
+                          <p className="post-description">
+                            <span>
+                              Starting Date:{" "}
+                              {dayjs(bh?.timing).format("YYYY-MM-DD")}
+                            </span>
+                          </p>
+                          {/* <p
                             style={{
                               color: "#F58733",
                               fontSize: "11px",
@@ -171,23 +249,27 @@ function BatchList() {
                           >
                             No of students registered: 450
                           </p> */}
-                        <a href="#" className="register">
-                          Request a call back
-                          <span>
-                            <img
-                              src={AroImg}
-                              alt=""
-                              className="image-fliud"
-                              style={{ width: "auto" }}
-                            />
-                          </span>
-                        </a>
+                          <Button
+                            // href="#"
+                            className="register"
+                            onClick={() => setModal(true)}
+                          >
+                            Request a call back
+                            {/* <span>
+                              <img
+                                src={AroImg}
+                                alt=""
+                                className="image-fliud"
+                                style={{ width: "auto" }}
+                              />
+                            </span> */}
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-              {/* <div className="post-slide">
+                  );
+                })}
+                {/* <div className="post-slide">
               <div className="post-content">
                 <div className="star_img_outer">
                   <img src={Img96} alt="" className="hetchs" />
@@ -422,20 +504,154 @@ function BatchList() {
                 </div>
               </div>
             </div> */}
-            </OwlCarousel>
-          ) : (
-            "No Batch Found"
-          )}
-          {/* <div class="owl-controls clickable">
+              </OwlCarousel>
+            ) : (
+              <p className="not_found">No Batch Found</p>
+            )}
+            {/* <div class="owl-controls clickable">
             <div className="owl-buttons">
               <div className="owl-prev"></div>
               <div className="owl-next"></div>
             </div>
           </div> */}
-          {/* <!-- <div className="btm_btn"><a href="#"> Explore More</a></div> --> */}
+            {/* <!-- <div className="btm_btn"><a href="#"> Explore More</a></div> --> */}
+          </div>
         </div>
       </div>
-    </div>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader>Enquire Now</ModalHeader>
+        <ModalBody>
+          <div className="bg-light-course">
+            <div className="form h-100">
+              {/* <p className="now">Enquire Now</p> */}
+              <form
+                className="custom_contact home_custom"
+                method="post"
+                id="contactForm"
+                name="contactForm"
+                onSubmit={handleSubmit(onNext)}
+              >
+                <div className="row">
+                  <div className="col-md-12 form-group ">
+                    <Controller
+                      id="name"
+                      name="name"
+                      className="form-control"
+                      control={control}
+                      rules={{ required: "Name is required" }}
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          placeholder="Enquiry Name"
+                          onChange={onChange}
+                          value={value ? value : ""}
+                        />
+                      )}
+                      // defaultValue={watch("name")}
+                    />
+                    {errors?.name && (
+                      <FormFeedback>{errors?.name?.message}</FormFeedback>
+                    )}
+                  </div>
+                  <div className="col-md-12 form-group ">
+                    <Controller
+                      id="email"
+                      name="email"
+                      className="form-control"
+                      control={control}
+                      rules={{ required: "Email is required" }}
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          type="email"
+                          placeholder="Email"
+                          onChange={onChange}
+                          value={value ? value : ""}
+                        />
+                      )}
+                    />
+                    {errors?.email && (
+                      <FormFeedback>{errors?.email?.message}</FormFeedback>
+                    )}
+                  </div>
+                  <div className="col-md-12 form-group ">
+                    <Controller
+                      id="phone"
+                      name="phone"
+                      className="form-control"
+                      control={control}
+                      rules={{ required: "Phone Number is required" }}
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          type="number"
+                          placeholder="Enquiry Phone Number"
+                          onChange={onChange}
+                          value={value ? value : ""}
+                        />
+                      )}
+                    />
+                    {errors?.phone && (
+                      <FormFeedback>{errors?.phone?.message}</FormFeedback>
+                    )}
+                  </div>
+                  <div className="col-md-12 form-group ">
+                    <Controller
+                      id="course"
+                      name="course"
+                      control={control}
+                      rules={{ required: "Course is required" }}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          isClearable
+                          options={courseDropdown || []}
+                          className="react-select"
+                          classNamePrefix="Select a Course"
+                          onChange={onChange}
+                          value={value ? value : null}
+                          styles={selectStyles}
+                        />
+                      )}
+                    />
+                    {errors.course && (
+                      <FormFeedback>{errors?.course?.message}</FormFeedback>
+                    )}
+                  </div>
+                  <div className="col-md-12 form-group ">
+                    <Controller
+                      id="center"
+                      name="center"
+                      control={control}
+                      rules={{ required: "Center is required" }}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          isClearable
+                          options={centerDropdown || []}
+                          className="react-select"
+                          classNamePrefix="select"
+                          onChange={onChange}
+                          value={value ? value : null}
+                          styles={selectStyles}
+                        />
+                      )}
+                    />
+                    {errors.center && (
+                      <FormFeedback>{errors?.center?.message}</FormFeedback>
+                    )}
+                  </div>
+                  <div className="col-md-12 form-group">
+                    <input
+                      type="submit"
+                      value="submit "
+                      className="btn btn-primary submit_bt  py-2 px-5"
+                    />
+                    <span className="submitting"></span>
+                  </div>
+                </div>
+              </form>
+              <div id="form-message-warning mt-4"></div>
+            </div>
+          </div>
+        </ModalBody>
+      </Modal>
+    </>
   );
 }
 

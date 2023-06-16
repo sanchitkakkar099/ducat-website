@@ -58,14 +58,14 @@ function Header() {
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
-              <a className="navbar-brand" href="#">
+              <Link className="navbar-brand" to={"/"}>
                 <img
                   src={Logo}
                   atl="head-logo"
                   width="90px"
                   className="image-fliud"
                 />
-              </a>
+              </Link>
               <div
                 className="collapse navbar-collapse"
                 id="navbarTogglerDemo03"

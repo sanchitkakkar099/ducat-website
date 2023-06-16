@@ -116,6 +116,31 @@ function CourseView() {
     navClass: ["owl-prev", "owl-next"],
     // callbacks: true,
   };
+
+  const selectStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      fontSize: "12px",
+    }),
+    control: (base) => ({
+      ...base,
+      height: "32px",
+      minHeight: "32px",
+      marginBottom: "20px",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      marginBottom: "5px",
+      fontSize: "12px",
+    }),
+    placeholder: (defaultStyles) => {
+      return {
+        ...defaultStyles,
+        fontSize: "13px",
+        marginBottom: "5px",
+      };
+    },
+  };
   return (
     <>
       <div className="bg-light-course">
@@ -256,6 +281,7 @@ function CourseView() {
                               classNamePrefix="Select a Course"
                               onChange={onChange}
                               value={value ? value : null}
+                              styles={selectStyles}
                             />
                           )}
                         />
@@ -285,6 +311,7 @@ function CourseView() {
                               classNamePrefix="select"
                               onChange={onChange}
                               value={value ? value : null}
+                              styles={selectStyles}
                             />
                           )}
                         />

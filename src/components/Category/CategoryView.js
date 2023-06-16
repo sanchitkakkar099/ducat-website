@@ -57,6 +57,30 @@ function CategoryView() {
     }
   }, [resEnquiry?.isSuccess]);
 
+  const selectStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      fontSize: "12px",
+    }),
+    control: (base) => ({
+      ...base,
+      height: "32px",
+      minHeight: "32px",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      marginBottom: "5px",
+      fontSize: "12px",
+    }),
+    placeholder: (defaultStyles) => {
+      return {
+        ...defaultStyles,
+        fontSize: "13px",
+        marginBottom: "5px",
+      };
+    },
+  };
+
   return (
     <>
       <div className="bg-light-course">
@@ -116,6 +140,7 @@ function CategoryView() {
                           name="email"
                           className="form-control"
                           control={control}
+                          rules={{ required: "Email is required" }}
                           render={({ field: { onChange, value } }) => (
                             <Input
                               type="email"
@@ -163,6 +188,7 @@ function CategoryView() {
                               classNamePrefix="Select a Course"
                               onChange={onChange}
                               value={value ? value : null}
+                              styles={selectStyles}
                             />
                           )}
                         />
@@ -184,6 +210,7 @@ function CategoryView() {
                               classNamePrefix="select"
                               onChange={onChange}
                               value={value ? value : null}
+                              styles={selectStyles}
                             />
                           )}
                         />
@@ -217,19 +244,21 @@ function CategoryView() {
             <div className="box-outer-flex">
               {viewData?.course &&
               Array.isArray(viewData?.course) &&
-              viewData?.course?.length > 0
-                ? viewData?.course?.map((el, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="flex-box_1"
-                        onClick={() => navigate(`/course/${el?._id}`)}
-                      >
-                        <p>{el?.title}</p>
-                      </div>
-                    );
-                  })
-                : "No Any Course Found"}
+              viewData?.course?.length > 0 ? (
+                viewData?.course?.map((el, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="flex-box_1"
+                      onClick={() => navigate(`/course/${el?._id}`)}
+                    >
+                      <p>{el?.title}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="not_found">No Course Found</p>
+              )}
             </div>
           </div>
         </div>

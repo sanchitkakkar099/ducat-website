@@ -80,20 +80,22 @@ function CategoryList() {
             <div className="box-outer pt-5">
               {categoryList &&
               Array.isArray(categoryList) &&
-              categoryList?.length > 0
-                ? categoryList?.map((cd, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="box"
-                        onClick={(e) => navToCategoryView(e, cd)}
-                      >
-                        <img src={cd?.logo?.filepath} />
-                        <p>{cd?.name}</p>
-                      </div>
-                    );
-                  })
-                : "No Cetgory Found"}
+              categoryList?.length > 0 ? (
+                categoryList?.map((cd, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="box"
+                      onClick={(e) => navToCategoryView(e, cd)}
+                    >
+                      <img src={cd?.logo?.filepath} />
+                      <p>{cd?.name}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="not_found">No Cetgory Found</p>
+              )}
             </div>
             {/* <div className="box-outer pt-5">
               <div className="box">
