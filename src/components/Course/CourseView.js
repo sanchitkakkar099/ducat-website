@@ -87,7 +87,7 @@ function CourseView() {
   const onNext = (state) => {
     const reqData = {
       ...state,
-      status: state?.status?.value,
+      status: "Active",
       course: state?.course?.value,
       center: state?.center?.value,
     };
@@ -126,7 +126,6 @@ function CourseView() {
       ...base,
       height: "32px",
       minHeight: "32px",
-      marginBottom: "20px",
     }),
     singleValue: (base) => ({
       ...base,
@@ -322,7 +321,7 @@ function CourseView() {
                       <div className="col-md-12 form-group">
                         <input
                           type="submit"
-                          value="submit "
+                          value="Submit "
                           className="btn btn-primary submit_bt  py-2 px-5"
                         />
                         <span className="submitting"></span>
@@ -387,7 +386,7 @@ function CourseView() {
                     </div>
                   );
                 })}
-
+              {/* 
               <div className="box_1">
                 <img src={PythonImg} />
                 <p>Earn Cerficate And Degrees</p>
@@ -399,7 +398,7 @@ function CourseView() {
               <div className="box_1">
                 <img src={PythonImg} />
                 <p>Master at Diffrent Areas</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

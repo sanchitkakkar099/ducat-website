@@ -77,7 +77,16 @@ function CategoryList() {
                 <a href="#">View All</a>
               </span> */}
             </h2>
-            <div className="box-outer pt-5">
+            <div
+              className="box-outer pt-5"
+              style={
+                categoryList &&
+                Array.isArray(categoryList) &&
+                categoryList?.length === 2
+                  ? { justifyContent: "unset" }
+                  : { justifyContent: "space-between" }
+              }
+            >
               {categoryList &&
               Array.isArray(categoryList) &&
               categoryList?.length > 0 ? (

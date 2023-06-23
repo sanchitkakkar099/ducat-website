@@ -49,7 +49,7 @@ function CourseList() {
     stageClass: "owl-wrapper",
     navContainerClass: "owl-controls owl-buttons",
     navClass: ["owl-prev", "owl-next"],
-    loop: true,
+    loop: false,
   };
 
   useEffect(() => {

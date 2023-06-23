@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Logo from "../assets/images/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useGetCategoryCourseDropdownQuery } from "../service";
 import { setCategoryCourseDropDown } from "../redux/courseSlice";
@@ -10,6 +10,7 @@ import useOutsideClick from "../hooks/useOutsideClick ";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const categoryCourseDropdown = useSelector(
     (state) => state.courseState.categoryCourseDropdown
   );
@@ -72,12 +73,22 @@ function Header() {
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100 ">
                   <li className="nav-item">
-                    <Link className="nav-link active" to={"/"}>
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/" ? "active" : ""
+                      }`}
+                      to={"/"}
+                    >
                       Home
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to={"/abouts"}>
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/abouts" ? "active" : ""
+                      }`}
+                      to={"/abouts"}
+                    >
                       About us
                     </Link>
                   </li>
@@ -191,22 +202,42 @@ function Header() {
                     </ul>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/certificate">
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/certificate" ? "active" : ""
+                      }`}
+                      to="/certificate"
+                    >
                       Certificate
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/placement">
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/placement" ? "active" : ""
+                      }`}
+                      to="/placement"
+                    >
                       Placements
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/blog">
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/blog" ? "active" : ""
+                      }`}
+                      to="/blog"
+                    >
                       Blog
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link btn_contact" to="/contact-us">
+                    <Link
+                      className={`nav-link ${
+                        location?.pathname === "/contact-us" ? "active" : ""
+                      } btn_contact`}
+                      to="/contact-us"
+                    >
                       Contact Us
                     </Link>
                   </li>

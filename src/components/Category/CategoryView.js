@@ -40,7 +40,7 @@ function CategoryView() {
   const onNext = (state) => {
     const reqData = {
       ...state,
-      status: state?.status?.value,
+      status: "Active",
       course: state?.course?.value,
       center: state?.center?.value,
     };
@@ -221,7 +221,7 @@ function CategoryView() {
                       <div className="col-md-12 form-group">
                         <input
                           type="submit"
-                          value="submit "
+                          value="Submit "
                           className="btn btn-primary submit_bt  py-2 px-5"
                         />
                         <span className="submitting"></span>

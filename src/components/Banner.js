@@ -61,7 +61,7 @@ function Banner() {
   return (
     <>
       <div className="row">
-        <div className="container">
+        <div className="container top__banner">
           <div className="top-header d-flex pb-5">
             <div className="col-md-6">
               <p>

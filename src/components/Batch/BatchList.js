@@ -50,6 +50,21 @@ function BatchList() {
 
   const [selectedCenter, setSelectedCenter] = useState(null);
 
+  const [owlOption, setOwlOption] = useState({
+    responsiveClass: true,
+    nav: true,
+    autoplay: true,
+    smartSpeed: 1000,
+    dots: false,
+    items: 4.5,
+    stageOuterClass: "owl-wrapper-outer",
+    stageClass: "owl-wrapper",
+    navContainerClass: "owl-controls owl-buttons",
+    loop:
+      batchList && Array.isArray(batchList) && batchList?.length > 1
+        ? true
+        : false,
+  });
   // Modal open state
   const [modal, setModal] = React.useState(false);
 
@@ -94,30 +109,26 @@ function BatchList() {
   }, [selectedCenter, firstCenter]);
 
   useEffect(() => {
-    if (resBathData?.isSuccess && !selectedCenter && firstCenter) {
+    if (resBathData?.isSuccess) {
       dispatch(getBatch(resBathData?.data?.data?.docs));
-      // setPageCount(resBathData?.data?.data?.totalDocs);
-    } else if (resBathData?.isSuccess && selectedCenter) {
-      dispatch(getBatch(resBathData?.data?.data?.docs));
+      setOwlOption({
+        responsiveClass: true,
+        nav: true,
+        autoplay: true,
+        smartSpeed: 1000,
+        dots: false,
+        items: 4.5,
+        stageOuterClass: "owl-wrapper-outer",
+        stageClass: "owl-wrapper",
+        navContainerClass: "owl-controls owl-buttons",
+        loop:
+          batchList && Array.isArray(batchList) && batchList?.length > 1
+            ? true
+            : false,
+      });
       // setPageCount(resBathData?.data?.data?.totalDocs);
     }
-  }, [resBathData?.isSuccess, selectedCenter, firstCenter]);
-
-  const options = {
-    responsiveClass: true,
-    nav: true,
-    autoplay: true,
-    smartSpeed: 1000,
-    dots: false,
-    items: 4.5,
-    stageOuterClass: "owl-wrapper-outer",
-    stageClass: "owl-wrapper",
-    navContainerClass: "owl-controls owl-buttons",
-    loop:
-      batchList && Array.isArray(batchList) && batchList?.length > 1
-        ? true
-        : false,
-  };
+  }, [resBathData?.isSuccess]);
 
   const filterCenter = (e) => {
     e.preventDefault();
@@ -140,6 +151,7 @@ function BatchList() {
         position: "top-center",
       });
       reset();
+      setModal(false);
     }
   }, [resEnquiry?.isSuccess]);
 
@@ -173,32 +185,30 @@ function BatchList() {
           <div className="col-md-12">
             <h2 className="text-left pop h23">Upcoming Batches</h2>
             <div className="location">
-              <span>
-                Choose your Location
-                <select
-                  className="form-select"
-                  onChange={(e) => filterCenter(e)}
-                >
-                  {centerDropdown &&
-                  Array.isArray(centerDropdown) &&
-                  centerDropdown?.length > 0 ? (
-                    centerDropdown?.map((el, i) => {
-                      return (
-                        <option key={i} value={el?._id}>
-                          {el?.label}
-                        </option>
-                      );
-                    })
-                  ) : (
-                    <options>No Center Found</options>
-                  )}
-                </select>
-              </span>
+              {centerDropdown &&
+                Array.isArray(centerDropdown) &&
+                centerDropdown?.length > 0 && (
+                  <span>
+                    Choose your Location
+                    <select
+                      className="form-select"
+                      onChange={(e) => filterCenter(e)}
+                    >
+                      {centerDropdown?.map((el, i) => {
+                        return (
+                          <option key={i} value={el?._id}>
+                            {el?.label}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </span>
+                )}
             </div>
             {batchList && Array.isArray(batchList) && batchList?.length > 0 ? (
               <OwlCarousel
                 id="course-slider"
-                {...options}
+                {...owlOption}
                 className="slider-first"
               >
                 {batchList?.map((bh, i) => {
@@ -236,8 +246,14 @@ function BatchList() {
                           <p className="post-description">
                             <span>
                               Starting Date:{" "}
-                              {dayjs(bh?.timing).format("YYYY-MM-DD")}
+                              {dayjs(bh?.start_date).format("YYYY-MM-DD")}
                             </span>
+                            <p>
+                              Batch Time :{" "}
+                              {bh?.timing
+                                ? dayjs(bh?.timing).format("hh:mm A")
+                                : "-"}
+                            </p>
                           </p>
                           {/* <p
                             style={{
@@ -521,7 +537,7 @@ function BatchList() {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader>Enquire Now</ModalHeader>
         <ModalBody>
-          <div className="bg-light-course">
+          <div className="bg-light-course" style={{ backgroundColor: "#fff" }}>
             <div className="form h-100">
               {/* <p className="now">Enquire Now</p> */}
               <form
@@ -639,7 +655,7 @@ function BatchList() {
                   <div className="col-md-12 form-group">
                     <input
                       type="submit"
-                      value="submit "
+                      value="Submit "
                       className="btn btn-primary submit_bt  py-2 px-5"
                     />
                     <span className="submitting"></span>

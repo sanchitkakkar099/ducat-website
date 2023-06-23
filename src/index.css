@@ -54,6 +54,9 @@ header .dropdown-menu > li:hover > .dropdown-submenu {
 .bg-light-course {
   background-color: #e8f7ff;
 }
+.modal-bg {
+  background-color: #e8f7ff;
+}
 .nav-link {
   text-align: center;
 }
@@ -799,6 +802,9 @@ a:hover {
 .owl-controls .owl-prev span,
 .owl-controls .owl-next span {
   display: none;
+}
+.owl-carousel.slider-first .owl-controls {
+  width: max-content !important;
 }
 .slider-first .owl-controls .owl-buttons {
   margin: 10px;
