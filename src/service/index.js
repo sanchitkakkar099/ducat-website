@@ -186,3 +186,44 @@ export const enquiryApi = createApi({
 });
 
 export const { useSubmitEnquiryMutation } = enquiryApi;
+
+export const clientApi = createApi({
+  tagTypes: ["client"],
+  reducerPath: "clientApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    clientList: builder.mutation({
+      query: (payload) => ({
+        url: "client/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["client"],
+    }),
+  }),
+});
+export const {
+  useClientListMutation,
+} = clientApi;
+
+export const aboutUsApi = createApi({
+  tagTypes: ["aboutUs"],
+  reducerPath: "aboutUsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    fetchAboutUs: builder.query({
+      query: (payload) => ({
+        url: "appsetting/aboutUs",
+        method: "GET",
+      }),
+      providesTags: ["aboutUs"],
+    }),
+  }),
+});
+export const {
+  useFetchAboutUsQuery,
+} = aboutUsApi;

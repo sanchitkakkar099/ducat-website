@@ -31,6 +31,7 @@ import {
 } from "reactstrap";
 import { Controller, useForm } from "react-hook-form";
 import { setCourseDropDown } from "../../redux/courseSlice";
+import { handleValidatePhone } from "../../constants/formConstant";
 
 function BatchList() {
   const dispatch = useDispatch();
@@ -49,6 +50,8 @@ function BatchList() {
   const [reqEnquiry, resEnquiry] = useSubmitEnquiryMutation();
 
   const [selectedCenter, setSelectedCenter] = useState(null);
+  const [selectedBatch, setSelectedBatch] = useState(null);
+
 
   const [owlOption, setOwlOption] = useState({
     responsiveClass: true,
@@ -178,6 +181,19 @@ function BatchList() {
       };
     },
   };
+
+  const reqEnquiryForm = (bh) => {
+    setSelectedBatch(bh)
+    setModal(true)
+  }
+
+  useEffect(() => {
+    reset({
+      course:{label:selectedBatch?.course?.title,value:selectedBatch?.course?._id},
+      center:{label:selectedBatch?.center?.title,value:selectedBatch?.center?._id}
+    })
+  },[selectedBatch])
+  console.log('selectedBatch',selectedBatch,courseDropdown);
   return (
     <>
       <div className="row pb-3 py-5">
@@ -268,7 +284,7 @@ function BatchList() {
                           <Button
                             // href="#"
                             className="register"
-                            onClick={() => setModal(true)}
+                            onClick={() => reqEnquiryForm(bh)}
                           >
                             Request a call back
                             {/* <span>
@@ -534,8 +550,10 @@ function BatchList() {
           </div>
         </div>
       </div>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader>Enquire Now</ModalHeader>
+      <Modal isOpen={modal} toggle={toggle} size="sm">
+        <ModalHeader className="enquire_modal">
+        Enquire Now
+        </ModalHeader>
         <ModalBody>
           <div className="bg-light-course" style={{ backgroundColor: "#fff" }}>
             <div className="form h-100">
@@ -574,7 +592,14 @@ function BatchList() {
                       name="email"
                       className="form-control"
                       control={control}
-                      rules={{ required: "Email is required" }}
+                      rules={{ 
+                        required: "Email is required",
+                        validate: {
+                          matchPattern: (v) =>
+                            /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v) ||
+                            "Email address must be a valid address",
+                        },
+                      }}
                       render={({ field: { onChange, value } }) => (
                         <Input
                           type="email"
@@ -594,7 +619,9 @@ function BatchList() {
                       name="phone"
                       className="form-control"
                       control={control}
-                      rules={{ required: "Phone Number is required" }}
+                      rules={{ 
+                      validate: (value) => handleValidatePhone(value)
+                      }}
                       render={({ field: { onChange, value } }) => (
                         <Input
                           type="number"

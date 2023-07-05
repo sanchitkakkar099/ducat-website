@@ -21,6 +21,7 @@ import ImgE1 from "../../assets/images/E1.png";
 import OwlCarousel from "react-owl-carousel";
 import { Link, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { handleValidatePhone } from "../../constants/formConstant";
 
 function CourseView() {
   const dispatch = useDispatch();
@@ -140,6 +141,13 @@ function CourseView() {
       };
     },
   };
+
+  useEffect(() => {
+    reset({
+      course:{label:courseViewData?.title,value:courseViewData?._id},
+    })
+  },[courseViewData])
+  console.log('courseViewData',courseViewData);
   return (
     <>
       <div className="bg-light-course">
@@ -214,7 +222,14 @@ function CourseView() {
                           name="email"
                           className="form-control"
                           control={control}
-                          rules={{ required: "Email is required" }}
+                          rules={{ 
+                            required: "Email is required",
+                            validate: {
+                              matchPattern: (v) =>
+                                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v) ||
+                                "Email address must be a valid address",
+                            },
+                          }}
                           render={({ field: { onChange, value } }) => (
                             <Input
                               type="email"
@@ -241,7 +256,9 @@ function CourseView() {
                           name="phone"
                           className="form-control"
                           control={control}
-                          rules={{ required: "Phone Number is required" }}
+                          rules={{ 
+                          validate: (value) => handleValidatePhone(value)
+                          }}
                           render={({ field: { onChange, value } }) => (
                             <Input
                               type="number"
@@ -437,7 +454,11 @@ function CourseView() {
               >
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(courseViewData?.description),
+                    __html: DOMPurify.sanitize(courseViewData?.description,{
+                      ADD_TAGS: ["iframe"], //or ALLOWED_TAGS
+                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],//or //or ALLOWED_ATR
+                      RETURN_TRUSTED_TYPE: true
+                    }),
                   }}
                 />
                 {/* <h4>What you will learn?</h4>
@@ -485,11 +506,19 @@ function CourseView() {
                   activeTab === "eligiblity" ? "show in active" : ""
                 }`}
               >
-                <h4>Menu 1</h4>
+              <p
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(courseViewData?.eligibility,{
+                      ADD_TAGS: ["iframe"], //or ALLOWED_TAGS
+                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],//or //or ALLOWED_ATR
+                    }),
+                  }}
+                />
+                {/* <h4>Menu 1</h4>
                 <p>
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                </p> */}
               </div>
               <div
                 id="menu2"
@@ -497,11 +526,19 @@ function CourseView() {
                   activeTab === "eop" ? "show in active" : ""
                 }`}
               >
-                <h3>Menu 2</h3>
+              <p
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(courseViewData?.enrollment_option,{
+                      ADD_TAGS: ["iframe"], //or ALLOWED_TAGS
+                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],//or //or ALLOWED_ATR
+                    }),
+                  }}
+                />
+                {/* <h3>Menu 2</h3>
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
                   accusantium doloremque laudantium, totam rem aperiam.
-                </p>
+                </p> */}
               </div>
               <div
                 id="menu3"
@@ -509,11 +546,19 @@ function CourseView() {
                   activeTab === "faqs" ? "show in active" : ""
                 }`}
               >
-                <h3>Menu 3</h3>
+              <p
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(courseViewData?.faqs,{
+                      ADD_TAGS: ["iframe"], //or ALLOWED_TAGS
+                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],//or //or ALLOWED_ATR
+                    }),
+                  }}
+                />
+                {/* <h3>Menu 3</h3>
                 <p>
                   Eaque ipsa quae ab illo inventore veritatis et quasi
                   architecto beatae vitae dicta sunt explicabo.
-                </p>
+                </p> */}
               </div>
             </div>
           </div>

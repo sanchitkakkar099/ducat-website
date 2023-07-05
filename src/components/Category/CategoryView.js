@@ -89,14 +89,12 @@ function CategoryView() {
             <div className="top-header d-flex top-header-singal">
               <div className="col-md-8 pr-5">
                 <span className="d-flex " style={{ alignItems: "center" }}>
-                  {viewData?.logo?.filepath ? (
+                  {viewData?.logo?.filepath && (
                     <img
                       src={viewData?.logo?.filepath}
                       height={65}
                       width={81}
                     />
-                  ) : (
-                    <img src={Img8} />
                   )}
                   <p className="ml-3 mb-0" style={{ fontSize: "32px" }}>
                     {viewData?.name}
