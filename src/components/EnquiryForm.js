@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormFeedback, Input } from "reactstrap";
 import Select from "react-select";
 import { toast } from "react-hot-toast";
+import { handleValidatePhone } from "../constants/formConstant";
 
 function EnquiryForm() {
   const dispatch = useDispatch();
@@ -121,7 +122,14 @@ function EnquiryForm() {
                     name="email"
                     className="form-control"
                     control={control}
-                    rules={{ required: "Email is required" }}
+                    rules={{ 
+                            required: "Email is required",
+                            validate: {
+                              matchPattern: (v) =>
+                                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v) ||
+                                "Email address must be a valid address",
+                            },
+                          }}
                     render={({ field: { onChange, value } }) => (
                       <Input
                         type="email"
@@ -141,7 +149,9 @@ function EnquiryForm() {
                     name="phone"
                     className="form-control"
                     control={control}
-                    rules={{ required: "Phone Number is required" }}
+                    rules={{ 
+                          validate: (value) => handleValidatePhone(value)
+                    }}
                     render={({ field: { onChange, value } }) => (
                       <Input
                         type="number"

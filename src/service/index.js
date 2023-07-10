@@ -227,3 +227,126 @@ export const aboutUsApi = createApi({
 export const {
   useFetchAboutUsQuery,
 } = aboutUsApi;
+
+export const certificateApi = createApi({
+  tagTypes: ["certificate"],
+  reducerPath: "certificateApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    certificateList: builder.mutation({
+      query: (payload) => ({
+        url: "certificate/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["certificate"],
+    }),
+    submitCertificate: builder.mutation({
+      query: (payload) => ({
+        url: "certificate",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["certificate"],
+    }),
+    certificateById: builder.query({
+      query: (id) => ({
+        url: `certificate/byid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["certificate"],
+    }),
+    deleteCertificate: builder.mutation({
+      query: (id) => ({
+        url: `certificate/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["certificate"],
+    }),
+    downloadCertificateCsv: builder.mutation({
+      query: (payload) => ({
+        url: "certificate/csv",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["certificate"],
+    }),
+  }),
+});
+export const {
+  useCertificateListMutation,
+  useSubmitCertificateMutation,
+  useCertificateByIdQuery,
+  useDeleteCertificateMutation,
+  useDownloadCertificateCsvMutation,
+} = certificateApi;
+
+export const blogApi = createApi({
+  tagTypes: ["blog","blog-category"],
+  reducerPath: "blogApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    blogList: builder.mutation({
+      query: (payload) => ({
+        url: "blog/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["blog"],
+    }),
+    blogById: builder.query({
+      query: (id) => ({
+        url: `blog/byid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["blog"],
+    }),
+    blogCategoryList: builder.mutation({
+      query: (payload) => ({
+        url: "blog/category/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["blog-category"],
+    }),
+    blogCategoryById: builder.query({
+      query: (id) => ({
+        url: `blog/category/byid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["blog-category"],
+    }),
+  }),
+});
+export const {
+  useBlogListMutation,
+  useBlogByIdQuery,
+  useBlogCategoryListMutation,
+  useBlogCategoryByIdQuery,
+} = blogApi;
+
+export const contactUsApi = createApi({
+  tagTypes: ["contactUs"],
+  reducerPath: "contactUsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    submitContactUs: builder.mutation({
+      query: (payload) => ({
+        url: "contactUs",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["contactUs"],
+    }),
+    
+  }),
+});
+export const {
+  useSubmitContactUsMutation,
+} = contactUsApi;
