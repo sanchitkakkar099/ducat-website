@@ -5,6 +5,7 @@ import {
   useGetAllCourseDropdownQuery,
   useRelatedCourseByCategoryIdMutation,
   useSubmitEnquiryMutation,
+  useTestimonialListMutation,
 } from "../../service";
 import { Controller, useForm } from "react-hook-form";
 import { setCourseDropDown, setCourseView } from "../../redux/courseSlice";
@@ -22,6 +23,7 @@ import OwlCarousel from "react-owl-carousel";
 import { Link, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { handleValidatePhone } from "../../constants/formConstant";
+import { getTestimonial } from "../../redux/testimonialSlice";
 
 function CourseView() {
   const dispatch = useDispatch();
@@ -41,6 +43,22 @@ function CourseView() {
   const [reqCourseByCategoryId, resCourseByCategoryId] =
     useRelatedCourseByCategoryIdMutation();
   console.log("resCourseByCategoryId", resCourseByCategoryId);
+  const testimonialList = useSelector((state) => state.testimonialState.testimonialList);
+  const [reqTestimonialData, resTestiminailData] = useTestimonialListMutation();
+  useEffect(() => {
+    reqTestimonialData({
+      page: 1,
+      limit: 10,
+      search: "",
+      status: "",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (resTestiminailData?.isSuccess) {
+      dispatch(getTestimonial(resTestiminailData?.data?.data?.docs));
+    }
+  }, [resTestiminailData]);
 
   const [activeTab, setActiveTab] = useState("about");
   const [relatedCourse, setRelatedCourse] = useState([]);
@@ -115,6 +133,7 @@ function CourseView() {
     stageClass: "owl-wrapper",
     navContainerClass: "owl-controls owl-buttons",
     navClass: ["owl-prev", "owl-next"],
+    loop:true
     // callbacks: true,
   };
 
@@ -572,6 +591,32 @@ function CourseView() {
               id="news-slide"
               {...options}
             >
+            {testimonialList &&
+                    Array.isArray(testimonialList) &&
+                    testimonialList?.length > 0 ? (
+                      testimonialList?.map((cl, i) => {
+                        return (
+              <div className="post-slide course-slide">
+
+                          <div className="post-content" key={i}>
+                            <div className="content-in">
+                              <div className="post-news post-course">
+                              {cl?.image?.filepath &&
+                                <img src={cl?.image?.filepath} alt="" className="hetchs1" />
+                              }
+                                <p>{cl?.name}</p>
+                                <i className="fa fa-quote-right" aria-hidden="true"></i>
+                              </div>
+                              <p className="post-description">
+                                {cl?.message}
+                              </p>
+                              <a href="#" className="read-more-m">
+                                Read more
+                              </a>
+                            </div>
+                          </div>
+                          </div>
+                        )})): "No Testimonial Found" }
               <div className="post-slide course-slide">
                 <div className="post-content">
                   <div className="content-in">

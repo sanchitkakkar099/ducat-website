@@ -350,3 +350,32 @@ export const contactUsApi = createApi({
 export const {
   useSubmitContactUsMutation,
 } = contactUsApi;
+
+export const testimonialApi = createApi({
+  tagTypes: ["testimonial"],
+  reducerPath: "testimonialApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    testimonialList: builder.mutation({
+      query: (payload) => ({
+        url: "testimonial/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["testimonial"],
+    }),
+    testimonialById: builder.query({
+      query: (id) => ({
+        url: `testimonial/byid/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["testimonial"],
+    }),
+  }),
+});
+export const {
+  useTestimonialListMutation,
+  useTestimonialByIdQuery,
+} = testimonialApi;

@@ -9,7 +9,8 @@ import {
   aboutUsApi,
   certificateApi,
   blogApi,
-  contactUsApi
+  contactUsApi,
+  testimonialApi
 } from "../service";
 import courseSlice from "./courseSlice";
 import categorySlice from "./categorySlice";
@@ -19,6 +20,8 @@ import enquirySlice from "./enquirySlice";
 import clientSlice from "./clientSlice";
 import certificateSlice from "./certificateSlice";
 import blogSlice from "./blogSlice";
+import testimonialSlice from "./testimonialSlice";
+
 
 
 const appReducer = combineReducers({
@@ -30,6 +33,7 @@ const appReducer = combineReducers({
   clientState: clientSlice,
   certificateState: certificateSlice,
   blogState: blogSlice,
+  testimonialState: testimonialSlice,
   [courseApi.reducerPath]: courseApi.reducer,
   [categoryApi.reducerPath]: categoryApi.reducer,
   [centerApi.reducerPath]: centerApi.reducer,
@@ -40,6 +44,7 @@ const appReducer = combineReducers({
   [certificateApi.reducerPath]: certificateApi.reducer,
   [blogApi.reducerPath]: blogApi.reducer,
   [contactUsApi.reducerPath]: contactUsApi.reducer,
+  [testimonialApi.reducerPath]: testimonialApi.reducer,
 });
 
 export const store = configureStore({
@@ -56,5 +61,6 @@ export const store = configureStore({
       certificateApi.middleware,
       blogApi.middleware,
       contactUsApi.middleware,
+      testimonialApi.middleware,
     ]),
 });
