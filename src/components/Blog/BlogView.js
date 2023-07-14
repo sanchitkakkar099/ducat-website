@@ -28,6 +28,7 @@ function BlogView() {
                    <h3 className="b_card-heading">{viewData?.title}</h3>
                    <img src={viewData?.image?.filepath} className="w-100" alt=""/>
                    <p
+                   className='mt-2'
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(viewData?.long_desc,{
                         ADD_TAGS: ["iframe"], //or ALLOWED_TAGS

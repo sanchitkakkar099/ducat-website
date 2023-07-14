@@ -16,6 +16,8 @@ const Placement = lazy(() => import("../components/Placement"));
 const BlogList = lazy(() => import("../components/Blog/BlogList"));
 const BlogView = lazy(() => import("../components/Blog/BlogView"));
 const ContactUs = lazy(() => import("../components/ContactUs"));
+const Gallary = lazy(() => import("../components/Gallary"));
+
 
 export const pageRoutes = [
   { path: "/", Component: Home },
@@ -27,4 +29,5 @@ export const pageRoutes = [
   { path: "/blog", Component: BlogList },
   { path: "/blog/:id", Component: BlogView },
   { path: "/contact-us", Component: ContactUs },
+  { path: "/gallary", Component: Gallary },
 ];

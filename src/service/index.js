@@ -379,3 +379,25 @@ export const {
   useTestimonialListMutation,
   useTestimonialByIdQuery,
 } = testimonialApi;
+
+
+export const galleryApi = createApi({
+  tagTypes: ["gallery"],
+  reducerPath: "galleryApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    galleryList: builder.mutation({
+      query: (payload) => ({
+        url: "gallery/list",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["gallery"],
+    })
+  }),
+});
+export const {
+  useGalleryListMutation,
+} = galleryApi;

@@ -1,13 +1,21 @@
 import DOMPurify from "dompurify";
 import React, { Fragment } from "react";
 import { useFetchAboutUsQuery } from "../service";
+import AboutImg from '../assets/images/about.png'
 
 function Abouts() {
   const resFetchAboutUs = useFetchAboutUsQuery();
   return (
-    <div className="row pb-3 py-5">
-      <div className="container">
-      <p
+    <>
+    <div class="about_banner">
+        <img src={AboutImg} class="w-100" width="auto" height="auto" alt=""/>
+        <div class="about_content">
+            <h1 class="about_heading">Our #1 Highest Priority is on <br/>Building Your Job- oriented Skills</h1>
+        </div>
+   </div>
+   <div className="our_mission">
+        <div className="container">
+        <p
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(resFetchAboutUs?.data?.data?.aboutus_content || '' , {
                       ADD_TAGS: ["iframe"], //or ALLOWED_TAGS
@@ -18,6 +26,7 @@ function Abouts() {
                 />
       </div>
     </div>
+    </>
   );
 }
 
